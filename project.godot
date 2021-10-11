@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://Assets/Objects/Player/Player.gd"
+}, {
+"base": "Camera2D",
+"class": "Tracker_Camera",
+"language": "GDScript",
+"path": "res://Assets/Scripts/Tracker_Camera.gd"
 } ]
 _global_script_class_icons={
-"Player": ""
+"Player": "",
+"Tracker_Camera": ""
 }
 
 [application]
@@ -74,6 +80,11 @@ mod_shift={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"unicode":0,"echo":false,"script":null)
  ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="Structures"
+2d_physics/layer_11="Player"
 
 [physics]
 

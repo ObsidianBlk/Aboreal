@@ -7,6 +7,7 @@ class_name Player
 # ENUMs and Constants
 # ----------------------------------------------------------------
 enum STATE {IDLE, MOVE, AIR, HURT}
+enum MOVEMENT {WALKING, RUNNING, CRAWLING}
 
 const IDLE_THRESHOLD = 1.0
 const FLOAT_THRESHOLD = 10.0
@@ -29,6 +30,7 @@ export (float, 0.0) var jump_force = 60
 # ----------------------------------------------------------------
 var _velocity = Vector2.ZERO
 var _state = STATE.IDLE
+var _move_state = MOVEMENT.WALKING
 
 
 # ----------------------------------------------------------------
@@ -63,7 +65,10 @@ func _ProcessIdleState(delta : float) -> void:
 		_state = STATE.MOVE
 		return
 	
-	_PlayIfNotCurrent("idle")
+	if _move_state == MOVEMENT.CRAWLING:
+		_PlayIfNotCurrent("crouch")
+	else:
+		_PlayIfNotCurrent("idle")
 
 	_ProcessUserJump(delta)
 	_ProcessUserMovement(delta)
@@ -80,7 +85,10 @@ func _ProcessMoveState(delta : float) -> void:
 		return
 	
 	if vlen <= max_walk_speed:
-		_PlayIfNotCurrent("walk")
+		if _move_state == MOVEMENT.WALKING:
+			_PlayIfNotCurrent("walk")
+		elif _move_state == MOVEMENT.CRAWLING:
+			_PlayIfNotCurrent("crawl")
 	elif vlen > max_walk_speed:
 		_PlayIfNotCurrent("run")
 
@@ -112,25 +120,19 @@ func _ProcessHurtState(delta : float) -> void:
 
 
 func _ProcessUserJump(delta : float) -> void:
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump") and _move_state != MOVEMENT.CRAWLING:
 		_velocity.y -= jump_force
 
 func _ProcessUserMovement(delta : float) -> void:
-	var direction = 0
-	var enable_run = false
-	if Input.is_action_pressed("left"):
-		direction -= 1
-	if Input.is_action_pressed("right"):
-		direction += 1
-	if Input.is_action_pressed("mod_shift"):
-		enable_run = true
+	var direction = _GetDirection()
+	_UpdateMovementState()
 	
 	var running = abs(_velocity.x) > max_walk_speed
-	if direction != 0:
+	if direction != 0 and not (_move_state == MOVEMENT.WALKING and running):
 		if sign(direction) != sign(_velocity.x):
 			_velocity.x = 0.0
-		var acceleration = run_accel if enable_run else walk_accel
-		var speed = max_run_speed if enable_run else max_walk_speed
+		var acceleration = run_accel if _move_state == MOVEMENT.RUNNING else walk_accel
+		var speed = max_run_speed if _move_state == MOVEMENT.RUNNING else max_walk_speed
 		_velocity.x = _Bound(
 			_velocity.x + (direction * acceleration * delta),
 			-speed, speed
@@ -144,6 +146,28 @@ func _ProcessUserMovement(delta : float) -> void:
 		_velocity.x = lerp(_velocity.x, 0.0, friction)
 	_velocity = move_and_slide_with_snap(_velocity, Vector2.DOWN, Vector2.UP)
 
+
+func _UpdateMovementState() -> void:
+	match _move_state:
+		MOVEMENT.WALKING:
+			if Input.is_action_pressed("down") and abs(_velocity.x) <= max_walk_speed:
+				_move_state = MOVEMENT.CRAWLING
+			if Input.is_action_pressed("mod_shift"):
+				_move_state = MOVEMENT.RUNNING
+		MOVEMENT.RUNNING:
+			if not Input.is_action_pressed("mod_shift"):
+				_move_state = MOVEMENT.WALKING
+		MOVEMENT.CRAWLING:
+			if not Input.is_action_pressed("down"):
+				_move_state = MOVEMENT.WALKING
+
+func _GetDirection() -> float:
+	var direction = 0.0
+	if Input.is_action_pressed("left"):
+		direction -= 1
+	if Input.is_action_pressed("right"):
+		direction += 1
+	return direction
 
 func _Bound(v : float, minv : float, maxv : float) -> float:
 	return max(minv, min(maxv, v))
