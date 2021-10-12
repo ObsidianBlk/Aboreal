@@ -3,21 +3,41 @@ class_name BoidGroup
 
 
 # ----------------------------------------------------------------------------
+# Export Variables
+# ----------------------------------------------------------------------------
+export (float, 0.1) var life_span = 60.0
+export var target_position : Vector2 = Vector2.ZERO
+export (float, 0.1) var time_to_target = 150.0
+
+# ----------------------------------------------------------------------------
 # Variables
 # ----------------------------------------------------------------------------
 var _boids = []
+var _locked = false
 var _center_of_mass = Vector2.ZERO
 var _size = 1.0
 
-#onready var col_node = get_node("CollisionShape2D")
+var _player : Player = null
 
 # ----------------------------------------------------------------------------
 # Override Methods
 # ----------------------------------------------------------------------------
 func _ready() -> void:
 	var col_node = get_node("CollisionShape2D")
-	#print(col_node)
 	_size = col_node.shape.radius
+	
+	var timer : Timer = get_node("Timer")
+	timer.connect("timeout", self, "_on_end_of_life")
+	
+	var tween : Tween = get_node("Tween")
+	tween.connect("tween_all_completed", self, "_on_reached_target")
+	tween.interpolate_property(
+		self, "global_position",
+		global_position, target_position, 
+		time_to_target,
+		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT
+	)
+	tween.start()
 #
 func _physics_process(delta : float) -> void:
 	_CalcCenterOfMass()
@@ -29,6 +49,9 @@ func _physics_process(delta : float) -> void:
 		var dir = boid.global_position.direction_to(global_position)
 		boid.set_impulse_direction(dir)
 		boid.set_impulse_weight(min(1.0, dist / _size))
+		if _player and not boid.knows_of_enemy():
+			if randf() < 0.05:
+				boid.set_enemy(_player)
 
 # ----------------------------------------------------------------------------
 # Private Methods
@@ -52,6 +75,9 @@ func has_boid(b : Boid) -> bool:
 	return false
 
 func add_boid(b : Boid) -> void:
+	if _locked:
+		return
+	
 	if not has_boid(b):
 		_boids.append([b, overlaps_body(b)])
 
@@ -60,6 +86,15 @@ func remove_boid(b : Boid) -> void:
 		if _boids[i][0] == b:
 			_boids.remove(i)
 			break
+
+func boid_count() -> int:
+	return _boids.size()
+
+func lock() -> void:
+	_locked = true
+
+func locked() -> bool:
+	return _locked
 
 func get_closest_to(b : Boid) -> Vector2:
 	var tpos = null
@@ -82,9 +117,10 @@ func get_closest_to(b : Boid) -> Vector2:
 
 func _on_body_entered(body):
 	if body is Boid:
-		print ("I see a BODY!")
 		if not has_boid(body):
 			_boids.append([body, true])
+	elif body is Player and _player == null:
+		_player = body
 
 
 func _on_body_exited(body):
@@ -93,3 +129,16 @@ func _on_body_exited(body):
 			if bo[0] == body:
 				bo[1] = false
 				break
+	elif body == _player:
+		_player = null
+
+
+func _on_reached_target() -> void:
+	var timer : Timer = get_node("Timer")
+	timer.start(life_span)
+
+func _on_end_of_life() -> void:
+	for b in _boids:
+		b[0].return_home()
+
+
