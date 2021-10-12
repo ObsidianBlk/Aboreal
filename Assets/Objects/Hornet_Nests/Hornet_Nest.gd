@@ -41,6 +41,11 @@ func set_small_spawn_container_path(cp : NodePath) -> void:
 # ---------------------------------------------------------------------------
 func _ready() -> void:
 	set_small_spawn_container_path(small_spawn_container_path)
+	if small_spawner_node != null:
+		for child in small_spawner_node.get_children():
+			var timer = child.get_node_or_null("Timer")
+			if timer != null:
+				timer.connect("timeout", self, "_on_small_spawn_timeout", [child])
 
 func _process(delta : float) -> void:
 	# TODO: This is a sledge hammer. Make this look more natural!!
@@ -52,9 +57,9 @@ func _process(delta : float) -> void:
 # ---------------------------------------------------------------------------
 func _GetRandSmallSpawnPosition() -> Node2D:
 	if small_spawner_node != null:
-		var idx = floor(rand_range(0.0, get_child_count()))
-		var node = get_child(idx)
-		if node is Node2D:
+		var idx = floor(rand_range(0.0, small_spawner_node.get_child_count()))
+		var node = small_spawner_node.get_child(idx)
+		if node is Node2D and node.visible:
 			return node
 	return null
 
@@ -66,14 +71,22 @@ func _SpawnSmalls() -> void:
 	if _smalls_group != null and _smalls_spawned < small_bee_count:
 		var pos_node = _GetRandSmallSpawnPosition()
 		if pos_node != null:
-			var boid = BOID_INST.instance()
-			boid.position = pos_node.global_position
-			_small_spawn_container_node.add_child(boid)
-			_smalls_group.add_boid(boid)
-			_smalls_spawned += 1			
+			var timer = pos_node.get_node_or_null("Timer")
+			if timer:
+				timer.start()
+				pos_node.visible = false
+				var boid = BOID_INST.instance()
+				boid.position = pos_node.global_position
+				_small_spawn_container_node.add_child(boid)
+				_smalls_group.add_boid(boid)
+				_smalls_spawned += 1
 	elif _smalls_spawned == 0:
 		_smalls_group = BOIDGROUP_INST.instance()
 		_smalls_group.position = self.global_position
 		_small_spawn_container_node.add_child(_smalls_group)
 		_SpawnSmalls()
+
+
+func _on_small_spawn_timeout(spawner : Node2D) -> void:
+	spawner.visible = true
 

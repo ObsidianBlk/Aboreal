@@ -26,6 +26,7 @@ target_node_path = NodePath("../Player")
 
 [node name="HNest_Small" parent="." instance=ExtResource( 5 )]
 position = Vector2( 238.815, 62.6469 )
+small_bee_count = 30.0
 small_spawn_container_path = NodePath("../Bees")
 
 [node name="Bees" type="Node2D" parent="."]

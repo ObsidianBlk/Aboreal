@@ -16,17 +16,41 @@ region_rect = Rect2( 32, 0, 32, 32 )
 [node name="Spawn1" type="Position2D" parent="SSpawner"]
 position = Vector2( 0, -10 )
 
+[node name="Timer" type="Timer" parent="SSpawner/Spawn1"]
+wait_time = 0.6
+one_shot = true
+
 [node name="Spawn2" type="Position2D" parent="SSpawner"]
 position = Vector2( 5, -2 )
+
+[node name="Timer" type="Timer" parent="SSpawner/Spawn2"]
+wait_time = 0.6
+one_shot = true
 
 [node name="Spawn3" type="Position2D" parent="SSpawner"]
 position = Vector2( 12.4867, 3.49329 )
 
+[node name="Timer" type="Timer" parent="SSpawner/Spawn3"]
+wait_time = 0.6
+one_shot = true
+
 [node name="Spawn4" type="Position2D" parent="SSpawner"]
 position = Vector2( -7.35822, 1.56083 )
+
+[node name="Timer" type="Timer" parent="SSpawner/Spawn4"]
+wait_time = 0.6
+one_shot = true
 
 [node name="Spawn5" type="Position2D" parent="SSpawner"]
 position = Vector2( -6.76361, 8.54742 )
 
+[node name="Timer" type="Timer" parent="SSpawner/Spawn5"]
+wait_time = 0.6
+one_shot = true
+
 [node name="Spawn6" type="Position2D" parent="SSpawner"]
 position = Vector2( 2.60139, 10.6285 )
+
+[node name="Timer" type="Timer" parent="SSpawner/Spawn6"]
+wait_time = 0.6
+one_shot = true

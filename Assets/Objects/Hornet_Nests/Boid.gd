@@ -13,8 +13,8 @@ export var verbose : bool = false
 # ----------------------------------------------------------------------------
 # Variables
 # ----------------------------------------------------------------------------
-var _speed = rand_range(2, 3)
-var _acceleration = 5.0
+var _speed = 1
+var _acceleration = 2.0
 var _velocity : Vector2 = Vector2.ZERO
 var _direction : Vector2 = Vector2.ZERO
 
