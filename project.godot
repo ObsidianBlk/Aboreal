@@ -10,6 +10,16 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "KinematicBody2D",
+"class": "Boid",
+"language": "GDScript",
+"path": "res://Assets/Objects/Hornet_Nests/Boid.gd"
+}, {
+"base": "Area2D",
+"class": "BoidGroup",
+"language": "GDScript",
+"path": "res://Assets/Objects/Hornet_Nests/BoidGroup.gd"
+}, {
+"base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Assets/Objects/Player/Player.gd"
@@ -20,6 +30,8 @@ _global_script_classes=[ {
 "path": "res://Assets/Scripts/Tracker_Camera.gd"
 } ]
 _global_script_class_icons={
+"Boid": "",
+"BoidGroup": "",
 "Player": "",
 "Tracker_Camera": ""
 }

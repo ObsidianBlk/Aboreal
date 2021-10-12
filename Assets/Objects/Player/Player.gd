@@ -18,7 +18,7 @@ const FLOAT_THRESHOLD = 10.0
 # ----------------------------------------------------------------
 export (float, 0.0) var gravity = 150
 export (float, 0.0) var max_walk_speed =  20
-export (float, 0.0) var max_run_speed = 200
+export (float, 0.0) var max_run_speed = 80
 export (float, 0.1) var walk_accel =  30
 export (float, 0.1) var run_accel = 100
 export (float, 0.0, 1.0) var walk_friction = 0.25
@@ -89,7 +89,7 @@ func _ProcessMoveState(delta : float) -> void:
 			_PlayIfNotCurrent("walk")
 		elif _move_state == MOVEMENT.CRAWLING:
 			_PlayIfNotCurrent("crawl")
-	elif vlen > max_walk_speed:
+	elif _move_state == MOVEMENT.RUNNING and vlen > max_walk_speed:
 		_PlayIfNotCurrent("run")
 
 	_ProcessUserJump(delta)
@@ -98,6 +98,7 @@ func _ProcessMoveState(delta : float) -> void:
 
 func _ProcessAirState(delta : float) -> void:
 	if is_on_floor():
+		_velocity.y = 0.0
 		if abs(_velocity.x) <= IDLE_THRESHOLD:
 			_state = STATE.IDLE
 		else:
@@ -121,7 +122,10 @@ func _ProcessHurtState(delta : float) -> void:
 
 func _ProcessUserJump(delta : float) -> void:
 	if Input.is_action_just_pressed("jump") and _move_state != MOVEMENT.CRAWLING:
-		_velocity.y -= jump_force
+		if abs(_velocity.x) > max_walk_speed:
+			_velocity.y -= jump_force * 1.5
+		else:
+			_velocity.y -= jump_force
 
 func _ProcessUserMovement(delta : float) -> void:
 	var direction = _GetDirection()
@@ -175,6 +179,7 @@ func _Bound(v : float, minv : float, maxv : float) -> float:
 
 func _PlayIfNotCurrent(anim_name : String) -> void:
 	if anim_node.current_animation != anim_name:
+		#print("Playing Current: ", anim_node.current_animation, " | Playing Now: ", anim_name)
 		anim_node.play(anim_name)
 
 # ----------------------------------------------------------------

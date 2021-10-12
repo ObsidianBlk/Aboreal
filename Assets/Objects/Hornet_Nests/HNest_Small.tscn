@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/Graphics/Hornet/Hornet_Nest.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Objects/Hornet_Nests/Hornet_Nest.gd" type="Script" id=2]
+
+[node name="HNest_Small" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 32, 0, 32, 32 )
+
+[node name="SSpawner" type="Node2D" parent="."]
+
+[node name="Spawn1" type="Position2D" parent="SSpawner"]
+position = Vector2( 0, -10 )
+
+[node name="Spawn2" type="Position2D" parent="SSpawner"]
+position = Vector2( 5, -2 )
+
+[node name="Spawn3" type="Position2D" parent="SSpawner"]
+position = Vector2( 12.4867, 3.49329 )
+
+[node name="Spawn4" type="Position2D" parent="SSpawner"]
+position = Vector2( -7.35822, 1.56083 )
+
+[node name="Spawn5" type="Position2D" parent="SSpawner"]
+position = Vector2( -6.76361, 8.54742 )
+
+[node name="Spawn6" type="Position2D" parent="SSpawner"]
+position = Vector2( 2.60139, 10.6285 )
