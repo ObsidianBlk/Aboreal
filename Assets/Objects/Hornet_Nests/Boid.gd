@@ -128,7 +128,6 @@ func set_impulse_weight(w : float) -> void:
 	_weight_impulse = max(0.0, min(1.0, w))
 	if _weight_impulse == 1.0 and _enemy != null:
 		if timer.is_stopped():
-			print("Maybe Ignore Player: ", timer.is_stopped())
 			timer.start(rand_range(0.4, 1.2))
 
 func set_impulse_direction(id : Vector2) -> void:

@@ -1,12 +1,12 @@
 extends KinematicBody2D
 class_name Player
 
-
+signal dead
 
 # ----------------------------------------------------------------
 # ENUMs and Constants
 # ----------------------------------------------------------------
-enum STATE {IDLE, MOVE, AIR, HURT}
+enum STATE {IDLE, MOVE, AIR, HURT, DEAD}
 enum MOVEMENT {WALKING, RUNNING, CRAWLING}
 
 const IDLE_THRESHOLD = 1.0
@@ -182,12 +182,20 @@ func _PlayIfNotCurrent(anim_name : String) -> void:
 		#print("Playing Current: ", anim_node.current_animation, " | Playing Now: ", anim_name)
 		anim_node.play(anim_name)
 
+func _Die() -> void:
+	print("I have technically died!")
+	emit_signal("dead")
+
+
 # ----------------------------------------------------------------
 # Public Methods
 # ----------------------------------------------------------------
+func reset() -> void:
+	_state = STATE.IDLE
+
+
 func hurt(amount : float) -> void:
 	pass
-
 
 # ----------------------------------------------------------------
 # Handler Methods
