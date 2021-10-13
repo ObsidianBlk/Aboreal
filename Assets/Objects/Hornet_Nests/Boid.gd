@@ -144,7 +144,7 @@ func set_enemy(e : Node2D) -> void:
 		_enemy = null
 		_enemy_lock = true
 		timer.start(4.0)
-	elif not _enemy_lock and _enemy == null:
+	elif not _return_home and not _enemy_lock and _enemy == null:
 		_enemy = e
 
 func knows_of_enemy() -> bool:
@@ -152,6 +152,7 @@ func knows_of_enemy() -> bool:
 
 func return_home() -> void:
 	_return_home = true
+
 
 
 
