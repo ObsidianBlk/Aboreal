@@ -10,7 +10,6 @@ viewport_path = NodePath("Viewport")
 [node name="Viewport" type="Viewport" parent="."]
 size = Vector2( 512, 288 )
 size_override_stretch = true
-handle_input_locally = false
 hdr = false
 disable_3d = true
 usage = 0

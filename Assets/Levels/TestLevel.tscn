@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Assets/Graphics/Tilesets/TilesetB_Floors.tres" type="TileSet" id=1]
 [ext_resource path="res://Assets/Objects/Player/Player.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Assets/Objects/Hornet_Nests/HNest_Small.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Graphics/Tilesets/TilesetB_Walls.tres" type="TileSet" id=6]
 [ext_resource path="res://Assets/Graphics/Light/GodRay_A.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Objects/Doorway/Doorway.tscn" type="PackedScene" id=8]
 
 [node name="TestLevel" type="Node2D"]
 script = ExtResource( 4 )
@@ -64,7 +65,23 @@ tile_set = ExtResource( 1 )
 cell_size = Vector2( 12, 12 )
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 458748, 2, 0, 458749, 0, 0, 458750, 0, 0, 458751, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 393224, 4, 0, 393225, 5, 0, 458763, 3, 0, 458764, 4, 0, 458765, 5, 0, 524304, 3, 0, 524305, 4, 0, 524306, 4, 0, 524307, 5, 0, 589845, 3, 0, 589846, 4, 0, 589847, 4, 0, 589848, 5, 0, 720903, 2, 0, 720904, 0, 0, 720905, 0, 0, 720906, 0, 0, 720907, 0, 0, 720908, 0, 0, 720909, 0, 0, 720910, 0, 0, 720911, 0, 0, 720912, 0, 0, 720913, 0, 0, 720914, 0, 0, 720915, 0, 0, 720916, 0, 0, 720917, 0, 0, 720918, 0, 0, 720919, 0, 0, 720920, 0, 0, 720921, 0, 0, 720922, 0, 0, 720923, 0, 0, 720924, 0, 0, 720925, 0, 0, 720926, 0, 0, 720927, 0, 0, 720928, 0, 0, 720929, 0, 0, 720930, 0, 0, 720931, 0, 0, 720932, 0, 0, 720933, 0, 0, 720934, 0, 0, 720935, 0, 0, 720936, 0, 0, 720937, 0, 0, 720938, 0, 0, 720939, 0, 0, 720940, 0, 0, 720941, 0, 0, 720942, 0, 0, 720943, 0, 0, 720944, 0, 0, 720945, 0, 0, 720946, 0, 0, 720947, 0, 0, 720948, 0, 0, 720949, 0, 0, 720950, 0, 0, 720951, 0, 0, 720952, 0, 0, 720953, 0, 0, 720954, 1, 0 )
+tile_data = PoolIntArray( 458748, 2, 0, 458749, 0, 0, 458750, 0, 0, 458751, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 720903, 2, 0, 720904, 0, 0, 720905, 0, 0, 720906, 0, 0, 720907, 0, 0, 720908, 0, 0, 720909, 0, 0, 720910, 0, 0, 720911, 0, 0, 720912, 0, 0, 720913, 0, 0, 720914, 0, 0, 720915, 0, 0, 720916, 0, 0, 720917, 0, 0, 720918, 0, 0, 720919, 0, 0, 720920, 0, 0, 720921, 0, 0, 720922, 0, 0, 720923, 0, 0, 720924, 0, 0, 720925, 0, 0, 720926, 0, 0, 720927, 0, 0, 720928, 0, 0, 720929, 0, 0, 720930, 0, 0, 720931, 0, 0, 720932, 0, 0, 720933, 0, 0, 720934, 0, 0, 720935, 0, 0, 720936, 0, 0, 720937, 0, 0, 720938, 0, 0, 720939, 0, 0, 720940, 0, 0, 720941, 0, 0, 720942, 0, 0, 720943, 0, 0, 720944, 0, 0, 720945, 0, 0, 720946, 0, 0, 720947, 0, 0, 720948, 0, 0, 720949, 0, 0, 720950, 0, 0, 720951, 0, 0, 720952, 0, 0, 720953, 0, 0, 720954, 1, 0 )
+
+[node name="Platforms" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 12, 12 )
+collision_layer = 2
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 393224, 4, 0, 393225, 5, 0, 458763, 3, 0, 458764, 4, 0, 458765, 5, 0, 524304, 3, 0, 524305, 4, 0, 524306, 4, 0, 524307, 5, 0, 589845, 3, 0, 589846, 4, 0, 589847, 4, 0, 589848, 5, 0 )
+
+[node name="Doorway" parent="." instance=ExtResource( 8 )]
+position = Vector2( 34, 72 )
+target_door_path = NodePath("../Doorway2")
+
+[node name="Doorway2" parent="." instance=ExtResource( 8 )]
+position = Vector2( 540, 132 )
+target_door_path = NodePath("../Doorway")
 
 [node name="HNest_Small" parent="." instance=ExtResource( 5 )]
 position = Vector2( 238.815, 62.6469 )
@@ -86,10 +103,11 @@ target_node_path = NodePath("../Player")
 position = Vector2( 46.0209, 37.0413 )
 
 [node name="Position2D2" type="Position2D" parent="Bees"]
-position = Vector2( 382.76, 156.583 )
+position = Vector2( 377.087, 125.882 )
 
 [node name="Position2D3" type="Position2D" parent="Bees"]
 position = Vector2( 391.178, 15.1533 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
 color = Color( 0.227451, 0.227451, 0.227451, 1 )

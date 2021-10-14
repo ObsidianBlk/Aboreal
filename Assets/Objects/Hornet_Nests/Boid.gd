@@ -15,8 +15,10 @@ export var verbose : bool = false
 # ----------------------------------------------------------------------------
 # Variables
 # ----------------------------------------------------------------------------
-var _speed = 1
-var _acceleration = 2.0
+var _speed = 40
+var _chase_speed = 160
+var _acceleration = 50
+var _chase_accel = 80
 var _velocity : Vector2 = Vector2.ZERO
 var _direction : Vector2 = Vector2.ZERO
 
@@ -63,21 +65,11 @@ func _physics_process(delta : float) -> void:
 		_ApplyCNImpulse()
 		_ApplyGroupImpulse()
 	
-	_velocity += _direction * _acceleration * delta
+	var accel = _acceleration if _enemy == null else _chase_accel
+	_velocity += _direction * accel * delta
 	_direction = _velocity.normalized()
-	if _return_home or _enemy != null:
-		var dist = 0.0
-		if _enemy:
-			dist = global_position.distance_to(_enemy.global_position)
-		else:
-			dist = global_position.distance_to(home_position)
-		var speed = min(_speed, _speed * (dist / TARGET_DISTANCE))
-		if _velocity.length() > speed:
-			_velocity = _direction * speed
-	else:
-		if _velocity.length() > _speed:
-			_velocity = _direction * _speed
-	move_and_collide(_velocity)
+	_ThrottleVelocity()
+	_velocity = move_and_slide(_velocity, Vector2.UP, true)
 	if _enemy and global_position.distance_to(_enemy.global_position) < 8.0:
 		if _enemy.has_method("hurt"):
 			_enemy.hurt(0.5)
@@ -93,6 +85,17 @@ func _physics_process(delta : float) -> void:
 # ----------------------------------------------------------------------------
 # Private Methods
 # ----------------------------------------------------------------------------
+func _ThrottleVelocity() -> void:
+	var speed = _speed if _enemy == null else _chase_speed
+	if _enemy != null or _return_home:
+		var dist = global_position.distance_to(
+			home_position if _enemy == null else _enemy.global_position
+		)
+		speed = min(speed, speed * (dist / TARGET_DISTANCE))
+	if _velocity.length() > speed:
+		_velocity = _direction * speed
+
+
 func _ApplyCOMImpulse() -> void:
 	var dist = _center_of_mass.distance_to(global_position)
 	var imp_direction = global_position.direction_to(_center_of_mass)
