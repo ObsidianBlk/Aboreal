@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://Assets/Graphics/Light/GodRay_A.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Graphics/Light/GodRay_24x48.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Graphics/Objects/Doorway_A.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Objects/Doorway/Doorway.gd" type="Script" id=3]
 
@@ -108,7 +108,7 @@ tracks/3/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=3]
 resource_name = "idle_open"
 length = 0.1
 tracks/0/type = "value"
@@ -160,8 +160,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "open"
+[sub_resource type="Animation" id=4]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -212,13 +211,13 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="OccluderPolygon2D" id=4]
+[sub_resource type="OccluderPolygon2D" id=5]
 polygon = PoolVector2Array( 0.0595627, -21.8711, 0.0595627, -0.284494, 9.8596, -0.085844, 9.8596, -14.7197, 5.48931, -20.2156 )
 
-[sub_resource type="OccluderPolygon2D" id=5]
+[sub_resource type="OccluderPolygon2D" id=6]
 polygon = PoolVector2Array( 0.0595627, -21.7386, 0.125778, -0.0196285, -9.93912, -0.085844, -10.0053, -15.0508, -5.23775, -20.2156 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 8, 10 )
 
 [node name="Doorway" type="Node2D"]
@@ -234,26 +233,28 @@ frame = 5
 autoplay = "idle"
 anims/close = SubResource( 1 )
 anims/idle = SubResource( 2 )
-anims/idle_open = SubResource( 7 )
-anims/open = SubResource( 3 )
+anims/idle_open = SubResource( 3 )
+anims/open = SubResource( 4 )
 
 [node name="Light2D" type="Light2D" parent="."]
-position = Vector2( 0.0692806, -19.3075 )
+position = Vector2( 0.201439, -14.2379 )
 texture = ExtResource( 1 )
-offset = Vector2( 0, 24 )
+offset = Vector2( 0, 18 )
+texture_scale = 0.8
+range_height = 2048.0
 shadow_enabled = true
 shadow_buffer_size = 512
 
 [node name="LO_Right" type="LightOccluder2D" parent="."]
 light_mask = 3
 position = Vector2( 11.05, 0 )
-occluder = SubResource( 4 )
+occluder = SubResource( 5 )
 light_mask = 3
 
 [node name="LO_Left" type="LightOccluder2D" parent="."]
 light_mask = 3
 position = Vector2( -11.1437, 0 )
-occluder = SubResource( 5 )
+occluder = SubResource( 6 )
 light_mask = 3
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -262,7 +263,7 @@ collision_mask = 1024
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2( 0, -12 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_finished"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]

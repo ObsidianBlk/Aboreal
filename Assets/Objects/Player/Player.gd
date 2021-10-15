@@ -8,11 +8,14 @@ signal dead
 # ----------------------------------------------------------------
 # ENUMs and Constants
 # ----------------------------------------------------------------
-enum STATE {IDLE, MOVE, AIR, TRANSITION, HURT, DEAD}
+enum STATE {IDLE, MOVE, AIR, PICKUP, TRANSITION, HURT, DEAD}
 enum MOVEMENT {WALKING, RUNNING, CRAWLING}
 
 const IDLE_THRESHOLD = 8.0
 const FLOAT_THRESHOLD = 10.0
+
+var SPRITE_UNEQUIPPED = preload("res://Assets/Graphics/Player/Player.png")
+var SPRITE_EQUIPPED = preload("res://Assets/Graphics/Player/Player_charger.png")
 
 
 # ----------------------------------------------------------------
@@ -34,6 +37,7 @@ var _velocity = Vector2.ZERO
 var _state = STATE.IDLE
 var _move_state = MOVEMENT.WALKING
 
+var _battery_charge = -1.0
 var _always_run = false
 
 var _transition_target : Vector2 = Vector2.ZERO
@@ -43,7 +47,9 @@ var _transition_target : Vector2 = Vector2.ZERO
 # Onready Variables
 # ----------------------------------------------------------------
 onready var anim_node = get_node("Anim")
-onready var sprite_node = get_node("Sprite")
+onready var sprite_node = get_node("Viz/Sprite")
+onready var bat_light_node = get_node("Viz/Battery_Light")
+onready var viz_node = get_node("Viz")
 
 onready var acttimer_node = get_node("ActTimer")
 onready var tween_node = get_node("Tween")
@@ -163,10 +169,13 @@ func _ProcessUserMovement(delta : float) -> void:
 			_velocity.x + (direction * acceleration * delta),
 			-speed, speed
 		)
-		if _velocity.x > 0.0 and sprite_node.scale.x < 0.0:
-			sprite_node.scale.x = 1.0
-		elif _velocity.x < 0.0 and sprite_node.scale.x > 0.0:
-			sprite_node.scale.x = -1.0
+		if _velocity.x > 0.0 and viz_node.scale.x < 0.0:
+			#print("Changing Scale - RIGHT")
+			viz_node.scale.x = 1.0
+		elif _velocity.x < 0.0 and viz_node.scale.x > 0.0:
+			#print("Changing Scale - LEFT - ", scale)
+			viz_node.scale.x = -1.0
+			#print(self.scale)
 	else:
 		var friction = run_friction if running else walk_friction
 		_velocity.x = lerp(_velocity.x, 0.0, friction)
@@ -210,6 +219,17 @@ func _PlayIfNotCurrent(anim_name : String) -> void:
 		#print("Playing Current: ", anim_node.current_animation, " | Playing Now: ", anim_name)
 		anim_node.play(anim_name)
 
+
+func _PickedUp() -> void:
+	if _state == STATE.PICKUP:
+		if _battery_charge >= 0.0:
+			sprite_node.texture = SPRITE_EQUIPPED
+			bat_light_node.visible = true
+		else:
+			sprite_node.texture = SPRITE_UNEQUIPPED
+			bat_light_node.visible = false
+
+
 func _Die() -> void:
 	print("I have technically died!")
 	emit_signal("dead")
@@ -233,6 +253,22 @@ func transition(target_position : Vector2, doorway_anim : bool = false) -> void:
 		tween_node.interpolate_property(sprite_node, "self_modulate", sprite_node.self_modulate, Color(1,1,1,0), 0.4, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		tween_node.start()
 
+func give_battery(amount : float) -> bool:
+	if _battery_charge < 0.0 and amount >= 0.0:
+		_battery_charge = amount
+		_state = STATE.PICKUP
+		anim_node.play("pickup")
+		return true
+	return false
+
+func take_battery() -> float:
+	var v = _battery_charge
+	if _battery_charge >= 0.0:
+		_battery_charge = -1.0
+		_state = STATE.PICKUP
+		anim_node.play("pickup")
+	return v
+
 func hurt(amount : float) -> void:
 	pass
 
@@ -248,6 +284,8 @@ func _on_animation_finished(anim_name):
 		if anim_name == "exit_doorway":
 			anim_node.play("idle") # Forcing this which should also garentee all attributes are reset.
 			_state = STATE.IDLE
+	if _state == STATE.PICKUP:
+		_state = STATE.IDLE
 
 
 func _on_tween_completed(object, key):

@@ -107,6 +107,7 @@ activate={
 [layer_names]
 
 2d_physics/layer_1="Structures"
+2d_physics/layer_10="LightRays"
 2d_physics/layer_11="Player"
 
 [physics]

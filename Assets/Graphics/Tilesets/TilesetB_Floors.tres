@@ -1,6 +1,7 @@
-[gd_resource type="TileSet" load_steps=11 format=2]
+[gd_resource type="TileSet" load_steps=12 format=2]
 
 [ext_resource path="res://Assets/Graphics/Tilesets/TilesetB.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Graphics/Tilesets/TilesetB_Norm.png" type="Texture" id=2]
 
 [sub_resource type="OccluderPolygon2D" id=1]
 polygon = PoolVector2Array( 12, 12, 0, 12, 0, 8, 12, 8 )
@@ -32,6 +33,7 @@ points = PoolVector2Array( 12, 8, 0, 8, 0, 4, 12, 4 )
 [resource]
 0/name = "Floor A"
 0/texture = ExtResource( 1 )
+0/normal_map = ExtResource( 2 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 12, 48, 12, 12 )
@@ -54,6 +56,7 @@ points = PoolVector2Array( 12, 8, 0, 8, 0, 4, 12, 4 )
 0/z_index = 0
 1/name = "Floor A Right"
 1/texture = ExtResource( 1 )
+1/normal_map = ExtResource( 2 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 24, 48, 12, 12 )
@@ -76,6 +79,7 @@ points = PoolVector2Array( 12, 8, 0, 8, 0, 4, 12, 4 )
 1/z_index = 0
 2/name = "Floor A Left"
 2/texture = ExtResource( 1 )
+2/normal_map = ExtResource( 2 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
 2/region = Rect2( 0, 48, 12, 12 )
@@ -98,6 +102,7 @@ points = PoolVector2Array( 12, 8, 0, 8, 0, 4, 12, 4 )
 2/z_index = 0
 3/name = "Platform A Left"
 3/texture = ExtResource( 1 )
+3/normal_map = ExtResource( 2 )
 3/tex_offset = Vector2( 0, 0 )
 3/modulate = Color( 1, 1, 1, 1 )
 3/region = Rect2( 36, 48, 12, 12 )
@@ -119,6 +124,7 @@ points = PoolVector2Array( 12, 8, 0, 8, 0, 4, 12, 4 )
 3/z_index = 0
 4/name = "Platform A"
 4/texture = ExtResource( 1 )
+4/normal_map = ExtResource( 2 )
 4/tex_offset = Vector2( 0, 0 )
 4/modulate = Color( 1, 1, 1, 1 )
 4/region = Rect2( 48, 48, 12, 12 )
@@ -140,6 +146,7 @@ points = PoolVector2Array( 12, 8, 0, 8, 0, 4, 12, 4 )
 4/z_index = 0
 5/name = "Platform A Right"
 5/texture = ExtResource( 1 )
+5/normal_map = ExtResource( 2 )
 5/tex_offset = Vector2( 0, 0 )
 5/modulate = Color( 1, 1, 1, 1 )
 5/region = Rect2( 60, 48, 12, 12 )

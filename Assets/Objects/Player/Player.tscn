@@ -1,7 +1,8 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Assets/Graphics/Player/Player.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Objects/Player/Player.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Graphics/Light/Light_8x8.png" type="Texture" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.0
@@ -12,7 +13,7 @@ resource_name = "crawl"
 length = 1.3
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Viz/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -59,12 +60,24 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0, -5 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Viz/Battery_Light:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -1.83703, -6.95367 ), Vector2( -1.2758, -6.25213 ), Vector2( -1.51815, -6.09907 ), Vector2( -1.86963, -7.13083 ), Vector2( -2.00062, -7.50114 ), Vector2( -1.51426, -7.42246 ), Vector2( -1.44882, -7.53086 ) ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "crouch"
 length = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Viz/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -111,6 +124,18 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0, -5 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Viz/Battery_Light:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -1.83703, -6.95367 ) ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "die"
@@ -152,7 +177,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, -7.5 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:frame")
+tracks/3/path = NodePath("Viz/Sprite:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -177,8 +202,20 @@ tracks/4/keys = {
 "method": "_Die"
 } ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Viz/Battery_Light:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -0.854882, -11.1629 ), Vector2( -0.714577, -9.3389 ), Vector2( 0.407882, -8.63737 ), Vector2( 4.61712, -7.65521 ), Vector2( 5.17835, -5.41029 ), Vector2( 5.45897, -2.74444 ) ]
+}
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=5]
 resource_name = "enter_doorway"
 length = 0.4
 tracks/0/type = "value"
@@ -218,7 +255,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, -7.5 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:position")
+tracks/3/path = NodePath("Viz/Sprite:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -230,7 +267,7 @@ tracks/3/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, -4 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite:frame")
+tracks/4/path = NodePath("Viz/Sprite:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -242,7 +279,7 @@ tracks/4/keys = {
 "values": [ 39, 40, 41, 42 ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Sprite:self_modulate")
+tracks/5/path = NodePath("Viz/Sprite:self_modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -253,8 +290,20 @@ tracks/5/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("Viz/Battery_Light:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.267585, -9.75982 ), Vector2( 0.127273, -13.8287 ) ]
+}
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=6]
 resource_name = "exit_doorway"
 length = 0.4
 tracks/0/type = "value"
@@ -294,7 +343,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, -7.5 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:position")
+tracks/3/path = NodePath("Viz/Sprite:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -306,7 +355,7 @@ tracks/3/keys = {
 "values": [ Vector2( 0, -4 ), Vector2( 0, 0 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite:self_modulate")
+tracks/4/path = NodePath("Viz/Sprite:self_modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -318,7 +367,7 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Sprite:frame")
+tracks/5/path = NodePath("Viz/Sprite:frame")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -329,12 +378,24 @@ tracks/5/keys = {
 "update": 1,
 "values": [ 5, 6, 7, 8 ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("Viz/Battery_Light:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.127273, -12.9869 ), Vector2( 0.267585, -9.75982 ) ]
+}
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=7]
 length = 0.2
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Viz/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -381,12 +442,23 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0, -7.5 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Viz/Battery_Light:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -2.01377, -11.0299 ), Vector2( -1.31223, -10.8896 ) ]
+}
 
-[sub_resource type="Animation" id=6]
-resource_name = "falling_die"
+[sub_resource type="Animation" id=8]
 length = 0.4
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Viz/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -447,13 +519,24 @@ tracks/4/keys = {
 "method": "_Die"
 } ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Viz/Battery_Light:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -1.59285, -9.3462 ), Vector2( -1.17193, -6.82066 ), Vector2( 0.231148, -5.41758 ), Vector2( 1.91484, -4.29512 ) ]
+}
 
-[sub_resource type="Animation" id=7]
-resource_name = "falling_hurt"
+[sub_resource type="Animation" id=9]
 length = 0.1
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Viz/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -500,12 +583,24 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0, -7.5 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Viz/Battery_Light:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -1.59285, -10.4687 ) ]
+}
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=10]
 length = 0.1
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Viz/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -552,11 +647,23 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0, -7.5 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Viz/Battery_Light:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -2.15408, -10.8896 ) ]
+}
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=11]
 length = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Viz/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -604,7 +711,7 @@ tracks/3/keys = {
 "values": [ Vector2( 0, -7.5 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite:position")
+tracks/4/path = NodePath("Viz/Sprite:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -616,7 +723,7 @@ tracks/4/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Sprite:self_modulate")
+tracks/5/path = NodePath("Viz/Sprite:self_modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -627,11 +734,23 @@ tracks/5/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("Viz/Battery_Light:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -2.575, -10.609 ) ]
+}
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=12]
 length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Viz/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -678,11 +797,23 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0, -7.5 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Viz/Battery_Light:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -2.575, -10.609 ), Vector2( -2.575, -12.433 ) ]
+}
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=13]
 length = 1.3
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Viz/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -729,11 +860,23 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0, -7.5 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Viz/Battery_Light:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 1, 1.1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -2.71531, -10.8896 ), Vector2( -1.73315, -10.7493 ), Vector2( 0.0908506, -10.8896 ), Vector2( 0.0908506, -10.8896 ), Vector2( -1.31223, -10.7493 ), Vector2( -2.575, -10.609 ) ]
+}
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=14]
 length = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Viz/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -780,11 +923,23 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0, -7.5 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Viz/Battery_Light:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -0.330078, -8.92527 ) ]
+}
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=15]
 length = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Viz/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -831,12 +986,24 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0, -7.5 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Viz/Battery_Light:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -2.43469, -8.78496 ) ]
+}
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=16]
 length = 0.2
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Viz/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -883,13 +1050,24 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0, -7.5 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Viz/Battery_Light:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -1.77259, -12.0515 ), Vector2( -2.0532, -12.3321 ) ]
+}
 
-[sub_resource type="Animation" id=15]
-resource_name = "lifting_hurt"
+[sub_resource type="Animation" id=17]
 length = 0.1
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Viz/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -936,12 +1114,23 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0, -7.5 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Viz/Battery_Light:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -1.77259, -12.0515 ) ]
+}
 
-[sub_resource type="Animation" id=16]
-resource_name = "pickup"
+[sub_resource type="Animation" id=18]
 length = 0.9
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Viz/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -988,12 +1177,38 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0, -7.5 ) ]
 }
+tracks/4/type = "method"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_PickedUp"
+} ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Viz/Battery_Light:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.472337, -11.4902 ), Vector2( 0.472337, -8.40345 ), Vector2( 0.472337, -11.3499 ) ]
+}
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=19]
 length = 0.8
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Viz/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1040,9 +1255,20 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0, -7.5 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Viz/Battery_Light:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -2.44127, -11.7858 ), Vector2( -2.44127, -13.0486 ), Vector2( -2.44127, -11.7458 ), Vector2( -2.44127, -10.63 ), Vector2( -2.44127, -11.8433 ), Vector2( -2.44127, -13.0917 ), Vector2( -2.16066, -12.2355 ), Vector2( -2.30097, -11.4494 ) ]
+}
 
-[sub_resource type="Animation" id=18]
-resource_name = "use"
+[sub_resource type="Animation" id=20]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -1070,7 +1296,7 @@ tracks/1/keys = {
 "values": [ 7.0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:frame")
+tracks/2/path = NodePath("Viz/Sprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1093,12 +1319,24 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0, -7.5 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Viz/Battery_Light:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -0.420921, -10.1021 ), Vector2( 0.420921, -10.1021 ), Vector2( 0.561228, -10.1021 ), Vector2( 1.47323, -10.1021 ) ]
+}
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=21]
 length = 1.4
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Viz/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1145,6 +1383,18 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0, -7.5 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Viz/Battery_Light:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -1.68369, -10.944 ), Vector2( -1.96431, -12.2068 ), Vector2( -1.91754, -11.9963 ), Vector2( -2.01108, -10.944 ), Vector2( -1.92923, -12.4874 ), Vector2( -1.84738, -11.9729 ), Vector2( -1.90585, -12.16 ) ]
+}
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 1024
@@ -1155,35 +1405,47 @@ script = ExtResource( 2 )
 position = Vector2( 0, -7.5 )
 shape = SubResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Viz" type="Node2D" parent="."]
+
+[node name="Battery_Light" type="Light2D" parent="Viz"]
+visible = false
+position = Vector2( -1.68369, -10.944 )
+texture = ExtResource( 3 )
+color = Color( 0.627451, 1, 0.462745, 1 )
+energy = 0.5
+shadow_enabled = true
+shadow_buffer_size = 256
+shadow_gradient_length = 10.0
+
+[node name="Sprite" type="Sprite" parent="Viz"]
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( -8, -20 )
 hframes = 12
 vframes = 6
-frame = 8
+frame = 9
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 anims/crawl = SubResource( 2 )
 anims/crouch = SubResource( 3 )
 anims/die = SubResource( 4 )
-anims/enter_doorway = SubResource( 20 )
-anims/exit_doorway = SubResource( 21 )
-anims/falling = SubResource( 5 )
-anims/falling_die = SubResource( 6 )
-anims/falling_hurt = SubResource( 7 )
-anims/float = SubResource( 8 )
-anims/idle = SubResource( 9 )
-anims/idle_breath = SubResource( 10 )
-anims/idle_look = SubResource( 11 )
-anims/jump = SubResource( 12 )
-anims/landing = SubResource( 13 )
-anims/lifting = SubResource( 14 )
-anims/lifting_hurt = SubResource( 15 )
-anims/pickup = SubResource( 16 )
-anims/run = SubResource( 17 )
-anims/use = SubResource( 18 )
-anims/walk = SubResource( 19 )
+anims/enter_doorway = SubResource( 5 )
+anims/exit_doorway = SubResource( 6 )
+anims/falling = SubResource( 7 )
+anims/falling_die = SubResource( 8 )
+anims/falling_hurt = SubResource( 9 )
+anims/float = SubResource( 10 )
+anims/idle = SubResource( 11 )
+anims/idle_breath = SubResource( 12 )
+anims/idle_look = SubResource( 13 )
+anims/jump = SubResource( 14 )
+anims/landing = SubResource( 15 )
+anims/lifting = SubResource( 16 )
+anims/lifting_hurt = SubResource( 17 )
+anims/pickup = SubResource( 18 )
+anims/run = SubResource( 19 )
+anims/use = SubResource( 20 )
+anims/walk = SubResource( 21 )
 
 [node name="ActTimer" type="Timer" parent="."]
 wait_time = 0.3
