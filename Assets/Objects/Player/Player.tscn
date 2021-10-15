@@ -1,8 +1,9 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Assets/Graphics/Player/Player.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Objects/Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Graphics/Light/Light_8x8.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Scripts/Flicker_Light.gd" type="Script" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.0
@@ -1416,6 +1417,9 @@ energy = 0.5
 shadow_enabled = true
 shadow_buffer_size = 256
 shadow_gradient_length = 10.0
+script = ExtResource( 4 )
+min_energy = 0.4
+max_energy = 0.7
 
 [node name="Sprite" type="Sprite" parent="Viz"]
 texture = ExtResource( 1 )
@@ -1452,6 +1456,12 @@ wait_time = 0.3
 one_shot = true
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="audio_sfx" type="AudioStreamPlayer" parent="."]
+bus = "SFX"
+
+[node name="audio_voice" type="AudioStreamPlayer" parent="."]
+bus = "SFX"
 
 [connection signal="animation_finished" from="Anim" to="." method="_on_animation_finished"]
 [connection signal="tween_completed" from="Tween" to="." method="_on_tween_completed"]

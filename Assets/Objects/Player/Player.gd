@@ -54,6 +54,9 @@ onready var viz_node = get_node("Viz")
 onready var acttimer_node = get_node("ActTimer")
 onready var tween_node = get_node("Tween")
 
+onready var sfx_node = get_node("audio_sfx")
+onready var voice_node = get_node("audio_voice")
+
 # ----------------------------------------------------------------
 # Override Methods
 # ----------------------------------------------------------------
@@ -234,6 +237,8 @@ func _Die() -> void:
 	print("I have technically died!")
 	emit_signal("dead")
 
+func _PlayAudio(audio_node : AudioStreamPlayer, audio_set : Dictionary, force : bool = false) -> void:
+	pass
 
 # ----------------------------------------------------------------
 # Public Methods
