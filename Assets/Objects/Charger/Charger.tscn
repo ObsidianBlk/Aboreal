@@ -310,20 +310,25 @@ vframes = 4
 frame = 6
 
 [node name="BLight" type="Light2D" parent="Body"]
+visible = false
 position = Vector2( -3.74577, -8.25769 )
 texture = ExtResource( 4 )
 color = Color( 0.627451, 1, 0.462745, 1 )
-energy = 0.914561
+energy = 0.597082
+range_height = 20.0
 script = ExtResource( 3 )
 
 [node name="CLight" type="Light2D" parent="Body"]
+visible = false
 light_mask = 1024
 position = Vector2( -2.86887, -6.23581 )
 texture = ExtResource( 5 )
 color = Color( 0.301961, 0.796078, 0.6, 1 )
-energy = 1.2203
+energy = 0.879933
+range_height = 20.0
 shadow_enabled = true
 shadow_buffer_size = 256
+shadow_item_cull_mask = 1025
 script = ExtResource( 3 )
 min_energy = 0.75
 max_energy = 1.5
@@ -337,10 +342,10 @@ position = Vector2( -2, -4 )
 shape = SubResource( 1 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Body"]
-light_mask = 1025
+light_mask = 1024
 position = Vector2( 0, -0.0417137 )
 occluder = SubResource( 2 )
-light_mask = 1025
+light_mask = 1024
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 autoplay = "unpowered"

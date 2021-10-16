@@ -1,0 +1,87 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Assets/Graphics/Objects/Terminal.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Objects/Terminal/Terminal.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Scripts/Flicker_Light.gd" type="Script" id=3]
+[ext_resource path="res://Assets/Graphics/Light/Light_16x16.png" type="Texture" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "active"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 3, 4 )
+
+[sub_resource type="OccluderPolygon2D" id=4]
+closed = false
+cull_mode = 2
+polygon = PoolVector2Array( -6.2625, -5.80933, 6.239, -5.80933 )
+
+[node name="Terminal" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Light2D" type="Light2D" parent="."]
+visible = false
+position = Vector2( 0, -7.681 )
+texture = ExtResource( 4 )
+texture_scale = 0.8
+range_height = 20.0
+shadow_enabled = true
+shadow_buffer_size = 256
+shadow_item_cull_mask = 1025
+script = ExtResource( 3 )
+min_energy = 0.4
+max_energy = 0.75
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+offset = Vector2( 0, -6 )
+hframes = 5
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+autoplay = "idle"
+anims/active = SubResource( 1 )
+anims/idle = SubResource( 2 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 0, -4 )
+shape = SubResource( 3 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+light_mask = 1024
+occluder = SubResource( 4 )
+light_mask = 1024
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_body_exited"]

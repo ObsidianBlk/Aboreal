@@ -3,12 +3,13 @@ class_name Player
 
 signal activate
 signal enter
+signal zone(src)
 signal dead
 
 # ----------------------------------------------------------------
 # ENUMs and Constants
 # ----------------------------------------------------------------
-enum STATE {IDLE, MOVE, AIR, PICKUP, TRANSITION, HURT, DEAD}
+enum STATE {IDLE, MOVE, AIR, USE, PICKUP, TRANSITION, HURT, DEAD}
 enum MOVEMENT {WALKING, RUNNING, CRAWLING}
 
 const IDLE_THRESHOLD = 8.0
@@ -17,6 +18,35 @@ const FLOAT_THRESHOLD = 10.0
 var SPRITE_UNEQUIPPED = preload("res://Assets/Graphics/Player/Player.png")
 var SPRITE_EQUIPPED = preload("res://Assets/Graphics/Player/Player_charger.png")
 
+var VOICE_HURT_SMALL = [
+	preload("res://Assets/Audio/SFX/Voice/small hurt1.wav"),
+	preload("res://Assets/Audio/SFX/Voice/small hurt2.wav"),
+	preload("res://Assets/Audio/SFX/Voice/small hurt3.wav"),
+	preload("res://Assets/Audio/SFX/Voice/small hurt4.wav"),
+	preload("res://Assets/Audio/SFX/Voice/small hurt 5.wav")
+]
+
+var VOICE_HURT_BIG = [
+	preload("res://Assets/Audio/SFX/Voice/big hurt1.wav"),
+	preload("res://Assets/Audio/SFX/Voice/big hurt2.wav"),
+	preload("res://Assets/Audio/SFX/Voice/big hurt3.wav"),
+	preload("res://Assets/Audio/SFX/Voice/big hurt4.wav")
+]
+
+var VOICE_JUMP = [
+	preload("res://Assets/Audio/SFX/Voice/jump1-01.wav"),
+	preload("res://Assets/Audio/SFX/Voice/jump2.wav"),
+	preload("res://Assets/Audio/SFX/Voice/jump3.wav"),
+	preload("res://Assets/Audio/SFX/Voice/jump4.wav"),
+	preload("res://Assets/Audio/SFX/Voice/jump5.wav"),
+]
+
+var VOICE_LAND = [
+	preload("res://Assets/Audio/SFX/Voice/landing1.wav"),
+	preload("res://Assets/Audio/SFX/Voice/landing2.wav"),
+	preload("res://Assets/Audio/SFX/Voice/landing3.wav"),
+	preload("res://Assets/Audio/SFX/Voice/landing4.wav")
+]
 
 # ----------------------------------------------------------------
 # Export Variables
@@ -33,14 +63,17 @@ export (float, 0.0) var jump_force = 60
 # ----------------------------------------------------------------
 # Variables
 # ----------------------------------------------------------------
+var _rng : RandomNumberGenerator = null
 var _velocity = Vector2.ZERO
 var _state = STATE.IDLE
 var _move_state = MOVEMENT.WALKING
 
 var _battery_charge = -1.0
 var _always_run = false
+var _flashlight_enabled = false
 
 var _transition_target : Vector2 = Vector2.ZERO
+var _transition_zone : String = ""
 
 
 # ----------------------------------------------------------------
@@ -49,6 +82,7 @@ var _transition_target : Vector2 = Vector2.ZERO
 onready var anim_node = get_node("Anim")
 onready var sprite_node = get_node("Viz/Sprite")
 onready var bat_light_node = get_node("Viz/Battery_Light")
+onready var flashlight_node = get_node("Viz/Flashlight")
 onready var viz_node = get_node("Viz")
 
 onready var acttimer_node = get_node("ActTimer")
@@ -60,6 +94,9 @@ onready var voice_node = get_node("audio_voice")
 # ----------------------------------------------------------------
 # Override Methods
 # ----------------------------------------------------------------
+func _ready() -> void:
+	_rng = RandomNumberGenerator.new()
+	_rng.randomize()
 
 func _physics_process(delta : float) -> void:
 	match(_state):
@@ -77,6 +114,8 @@ func _physics_process(delta : float) -> void:
 # ----------------------------------------------------------------
 func _ProcessIdleState(delta : float) -> void:
 	if not is_on_floor():
+		if _velocity.y < 0.0:
+			_PlayAudio(voice_node, VOICE_JUMP)
 		_state = STATE.AIR
 		return
 		
@@ -89,6 +128,7 @@ func _ProcessIdleState(delta : float) -> void:
 	else:
 		_PlayIfNotCurrent("idle")
 
+	_ProcessMiscInput()
 	_ProcessUserInteractions()
 	_ProcessUserJump(delta)
 	_ProcessUserMovement(delta)
@@ -96,6 +136,8 @@ func _ProcessIdleState(delta : float) -> void:
 
 func _ProcessMoveState(delta : float) -> void:
 	if not is_on_floor():
+		if _velocity.y < 0.0:
+			_PlayAudio(voice_node, VOICE_JUMP)
 		_state = STATE.AIR
 		return
 	
@@ -112,6 +154,7 @@ func _ProcessMoveState(delta : float) -> void:
 	elif _move_state == MOVEMENT.RUNNING and vlen > max_walk_speed:
 		_PlayIfNotCurrent("run")
 
+	_ProcessMiscInput()
 	_ProcessUserInteractions()
 	_ProcessUserJump(delta)
 	_ProcessUserMovement(delta)
@@ -119,6 +162,7 @@ func _ProcessMoveState(delta : float) -> void:
 
 func _ProcessAirState(delta : float) -> void:
 	if is_on_floor():
+		_PlayAudio(voice_node, VOICE_LAND)
 		_velocity.y = 0.0
 		if abs(_velocity.x) <= IDLE_THRESHOLD:
 			_state = STATE.IDLE
@@ -135,6 +179,7 @@ func _ProcessAirState(delta : float) -> void:
 			_PlayIfNotCurrent("falling")
 	
 	_velocity.y += gravity * delta
+	_ProcessMiscInput()
 	_ProcessUserMovement(delta)
 
 
@@ -152,11 +197,22 @@ func _ProcessUserInteractions() -> void:
 			emit_signal("activate")
 
 func _ProcessUserJump(delta : float) -> void:
-	if Input.is_action_just_pressed("jump") and _move_state != MOVEMENT.CRAWLING:
-		if abs(_velocity.x) > max_walk_speed:
-			_velocity.y -= jump_force * 1.5
+	if Input.is_action_just_pressed("jump"):
+		if _move_state == MOVEMENT.CRAWLING:
+			print("Crawling")
+			position.y += 2
 		else:
-			_velocity.y -= jump_force
+			print("Not Crawling")
+			if abs(_velocity.x) > max_walk_speed:
+				_velocity.y -= jump_force * 1.5
+			else:
+				_velocity.y -= jump_force
+
+func _ProcessMiscInput() -> void:
+	if Input.is_action_just_pressed("flashlight"):
+		_flashlight_enabled = not _flashlight_enabled
+		flashlight_node.visible = _flashlight_enabled
+		
 
 func _ProcessUserMovement(delta : float) -> void:
 	var direction = _GetDirection()
@@ -216,6 +272,12 @@ func _GetDirection() -> float:
 func _Bound(v : float, minv : float, maxv : float) -> float:
 	return max(minv, min(maxv, v))
 
+func _HideFlashlight() -> void:
+	flashlight_node.visible = false
+
+func _ShowFlashlight() -> void:
+	if _flashlight_enabled:
+		flashlight_node.visible = true
 
 func _PlayIfNotCurrent(anim_name : String) -> void:
 	if anim_node.current_animation != anim_name:
@@ -237,14 +299,29 @@ func _Die() -> void:
 	print("I have technically died!")
 	emit_signal("dead")
 
-func _PlayAudio(audio_node : AudioStreamPlayer, audio_set : Dictionary, force : bool = false) -> void:
-	pass
+func _PlayAudio(audio_node : AudioStreamPlayer, audio_set : Array, force : bool = false) -> void:
+	if not audio_node.playing or force:
+		var idx = _rng.randi_range(0, audio_set.size() - 1)
+		if audio_set[idx] is AudioStream:
+			audio_node.stream = audio_set[idx]
+			audio_node.play()
+		else:
+			print("Item in list isn't an AudioStream?!")
+	else:
+		print("Still playing audio.")
 
 # ----------------------------------------------------------------
 # Public Methods
 # ----------------------------------------------------------------
-func reset() -> void:
+func reset(full : bool = false) -> void:
 	_state = STATE.IDLE
+	if full:
+		_battery_charge = -1.0
+		sprite_node.texture = SPRITE_UNEQUIPPED
+		bat_light_node.visible = false
+		flashlight_node.visible = false
+		_flashlight_enabled = false
+		# Also... reset health
 
 func transition(target_position : Vector2, doorway_anim : bool = false) -> void:
 	if _state == STATE.TRANSITION:
@@ -257,6 +334,30 @@ func transition(target_position : Vector2, doorway_anim : bool = false) -> void:
 	else:
 		tween_node.interpolate_property(sprite_node, "self_modulate", sprite_node.self_modulate, Color(1,1,1,0), 0.4, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		tween_node.start()
+
+func transition_zone(target_zone : String) -> void:
+	if _state == STATE.TRANSITION:
+		return
+	_transition_zone = target_zone
+	_state = STATE.TRANSITION
+	anim_node.play("enter_doorway")
+
+func transition_end(no_doorway : bool = false) -> void:
+	if _state != STATE.TRANSITION or _transition_zone == "":
+		return
+	_transition_zone = ""
+	if no_doorway:
+		reset()
+	else:
+		anim_node.play("exit_doorway")
+
+func using(u : bool = true) -> void:
+	_state = STATE.USE if u else STATE.IDLE
+	if u:
+		anim_node.play("use")
+
+func is_using() -> bool:
+	return _state == STATE.USE
 
 func give_battery(amount : float) -> bool:
 	if _battery_charge < 0.0 and amount >= 0.0:
@@ -275,6 +376,7 @@ func take_battery() -> float:
 	return v
 
 func hurt(amount : float) -> void:
+	_PlayAudio(voice_node, VOICE_HURT_SMALL)
 	pass
 
 # ----------------------------------------------------------------
@@ -284,8 +386,11 @@ func hurt(amount : float) -> void:
 func _on_animation_finished(anim_name):
 	if _state == STATE.TRANSITION:
 		if anim_name == "enter_doorway":
-			self.global_position = _transition_target
-			anim_node.play("exit_doorway")
+			if _transition_zone != "":
+				emit_signal("zone", _transition_zone)
+			else:
+				self.global_position = _transition_target
+				anim_node.play("exit_doorway")
 		if anim_name == "exit_doorway":
 			anim_node.play("idle") # Forcing this which should also garentee all attributes are reset.
 			_state = STATE.IDLE

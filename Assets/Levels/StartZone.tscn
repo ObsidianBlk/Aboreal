@@ -1,0 +1,80 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Assets/Graphics/Tilesets/TilesetB_Floors.tres" type="TileSet" id=1]
+[ext_resource path="res://Assets/Graphics/Tilesets/TilesetB_Walls.tres" type="TileSet" id=2]
+[ext_resource path="res://Assets/Objects/Terminal/Terminal.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Scripts/AudioMon.gd" type="Script" id=4]
+[ext_resource path="res://Assets/Objects/ProgressBar/ProgressBar.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Levels/Zone.gd" type="Script" id=6]
+
+[node name="StartZone" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="Walls" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 12, 12 )
+format = 1
+tile_data = PoolIntArray( -327680, 4, 0, -327679, 2, 0, -327678, 2, 0, -327677, 2, 0, -327676, 2, 0, -327675, 2, 0, -327674, 26, 0, -327673, 27, 0, -327672, 27, 0, -327671, 27, 0, -327670, 28, 0, -327669, 2, 0, -327668, 2, 0, -327667, 2, 0, -327666, 2, 0, -327665, 2, 0, -327664, 2, 0, -327663, 2, 0, -327662, 3, 0, -262144, 4, 0, -262143, 2, 0, -262142, 2, 0, -262141, 2, 0, -262140, 2, 0, -262139, 2, 0, -262138, 7, 0, -262137, 8, 0, -262136, 8, 0, -262135, 8, 0, -262134, 9, 0, -262133, 2, 0, -262132, 2, 0, -262131, 2, 0, -262130, 2, 0, -262129, 2, 0, -262128, 2, 0, -262127, 2, 0, -262126, 3, 0, -196608, 4, 0, -196607, 2, 0, -196606, 2, 0, -196605, 2, 0, -196604, 2, 0, -196603, 2, 0, -196602, 7, 0, -196601, 8, 0, -196600, 8, 0, -196599, 8, 0, -196598, 9, 0, -196597, 2, 0, -196596, 2, 0, -196595, 2, 0, -196594, 2, 0, -196593, 2, 0, -196592, 2, 0, -196591, 2, 0, -196590, 3, 0, -131072, 4, 0, -131071, 32, 0, -131070, 2, 0, -131069, 2, 0, -131068, 2, 0, -131067, 2, 0, -131066, 29, 0, -131065, 30, 0, -131064, 30, 0, -131063, 30, 0, -131062, 31, 0, -131061, 2, 0, -131060, 2, 0, -131059, 2, 0, -131058, 2, 0, -131057, 2, 0, -131056, 2, 0, -131055, 2, 0, -131054, 3, 0, -65536, 4, 0, -65518, 3, 0 )
+
+[node name="Details" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 12, 12 )
+format = 1
+tile_data = PoolIntArray( -327679, 0, 0, -327678, 0, 0, -327677, 0, 0, -327676, 0, 0, -327675, 0, 0, -327669, 0, 0, -327668, 0, 0, -327667, 0, 0, -327666, 0, 0, -327665, 0, 0, -327664, 0, 0, -327663, 0, 0, -131071, 1, 0, -131070, 1, 0, -131069, 1, 0, -131068, 1, 0, -131067, 1, 0, -131061, 1, 0, -131060, 1, 0, -131059, 1, 0, -131058, 1, 0, -131057, 1, 0, -131056, 1, 0, -131055, 1, 0 )
+
+[node name="Floors" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 12, 12 )
+format = 1
+tile_data = PoolIntArray( -65536, 2, 0, -65535, 0, 0, -65534, 0, 0, -65533, 0, 0, -65532, 0, 0, -65531, 0, 0, -65530, 0, 0, -65529, 0, 0, -65528, 0, 0, -65527, 0, 0, -65526, 0, 0, -65525, 0, 0, -65524, 0, 0, -65523, 0, 0, -65522, 0, 0, -65521, 0, 0, -65520, 0, 0, -65519, 0, 0, -65518, 1, 0 )
+
+[node name="Audio_Terminals" type="Node2D" parent="."]
+
+[node name="Terminal_Master" parent="Audio_Terminals" instance=ExtResource( 3 )]
+position = Vector2( 26, -10 )
+
+[node name="ProgressBar" parent="Audio_Terminals/Terminal_Master" instance=ExtResource( 5 )]
+position = Vector2( 8, -17 )
+
+[node name="AudioMon_Master" type="Node" parent="Audio_Terminals/Terminal_Master"]
+script = ExtResource( 4 )
+value_node_path = NodePath("../ProgressBar")
+
+[node name="Terminal_Music" parent="Audio_Terminals" instance=ExtResource( 3 )]
+position = Vector2( 45, -10 )
+
+[node name="ProgressBar" parent="Audio_Terminals/Terminal_Music" instance=ExtResource( 5 )]
+position = Vector2( 8, -17 )
+
+[node name="AudioMon_Music" type="Node" parent="Audio_Terminals/Terminal_Music"]
+script = ExtResource( 4 )
+audio_bus = 1
+value_node_path = NodePath("../ProgressBar")
+
+[node name="Terminal_SFX" parent="Audio_Terminals" instance=ExtResource( 3 )]
+position = Vector2( 64, -10 )
+
+[node name="ProgressBar" parent="Audio_Terminals/Terminal_SFX" instance=ExtResource( 5 )]
+position = Vector2( 8, -17 )
+
+[node name="AudioMon_SFX" type="Node" parent="Audio_Terminals/Terminal_SFX"]
+script = ExtResource( 4 )
+audio_bus = 2
+value_node_path = NodePath("../ProgressBar")
+
+[node name="Zone_Doorways" type="Node2D" parent="."]
+
+[node name="Player_Container" type="Node2D" parent="."]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color( 0.164706, 0.156863, 0.141176, 1 )
+
+[node name="Player_Start" type="Position2D" parent="."]
+position = Vector2( 203.3, -11.5277 )
+
+[connection signal="shift_down" from="Audio_Terminals/Terminal_Master" to="Audio_Terminals/Terminal_Master/ProgressBar" method="slide_down"]
+[connection signal="shift_up" from="Audio_Terminals/Terminal_Master" to="Audio_Terminals/Terminal_Master/ProgressBar" method="slide_up"]
+[connection signal="shift_down" from="Audio_Terminals/Terminal_Music" to="Audio_Terminals/Terminal_Music/ProgressBar" method="slide_down"]
+[connection signal="shift_up" from="Audio_Terminals/Terminal_Music" to="Audio_Terminals/Terminal_Music/ProgressBar" method="slide_up"]
+[connection signal="shift_down" from="Audio_Terminals/Terminal_SFX" to="Audio_Terminals/Terminal_SFX/ProgressBar" method="slide_down"]
+[connection signal="shift_up" from="Audio_Terminals/Terminal_SFX" to="Audio_Terminals/Terminal_SFX/ProgressBar" method="slide_up"]

@@ -1,4 +1,5 @@
 extends Node2D
+class_name Doorway
 
 # ---------------------------------------------------------------------------
 # Export Variables
@@ -15,6 +16,12 @@ var _state = 0 # 0 = closed | 1 = open | 2 = Changing state
 # Onready Variables
 # ---------------------------------------------------------------------------
 onready var anim_node = get_node("AnimationPlayer")
+
+func _ready() -> void:
+	var light2d = get_node("Light2D")
+	var occluder = get_node("LO_Left")
+	
+	print("Light2D Shadow Mask: ", light2d.shadow_item_cull_mask, " | Occluder Mask: ", occluder.light_mask)
 
 
 # ---------------------------------------------------------------------------

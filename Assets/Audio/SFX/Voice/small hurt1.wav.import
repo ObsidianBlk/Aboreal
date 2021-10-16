@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/small hurt1.wav-3c0a1aa4a572bc6b30869839c8e619dc.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/SFX/Voice/small hurt1.wav"
+dest_files=[ "res://.import/small hurt1.wav-3c0a1aa4a572bc6b30869839c8e619dc.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

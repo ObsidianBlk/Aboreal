@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/mm-hmm gotit1.wav-b87fc9a87e8ca17bf9fd0725d37d9956.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/SFX/Voice/mm-hmm gotit1.wav"
+dest_files=[ "res://.import/mm-hmm gotit1.wav-b87fc9a87e8ca17bf9fd0725d37d9956.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

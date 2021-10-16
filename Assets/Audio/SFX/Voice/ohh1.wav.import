@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ohh1.wav-0b69be8f9dba6207cbd3a83179447752.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/SFX/Voice/ohh1.wav"
+dest_files=[ "res://.import/ohh1.wav-0b69be8f9dba6207cbd3a83179447752.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

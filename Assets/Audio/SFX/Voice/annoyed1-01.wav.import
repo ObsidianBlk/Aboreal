@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/annoyed1-01.wav-97a80ae606d9ac06b3f264ce0c5f7bda.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/SFX/Voice/annoyed1-01.wav"
+dest_files=[ "res://.import/annoyed1-01.wav-97a80ae606d9ac06b3f264ce0c5f7bda.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

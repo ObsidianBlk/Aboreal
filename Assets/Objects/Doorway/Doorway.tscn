@@ -227,7 +227,7 @@ script = ExtResource( 3 )
 texture = ExtResource( 2 )
 offset = Vector2( 0, -12 )
 hframes = 6
-frame = 5
+frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "idle"
@@ -237,25 +237,27 @@ anims/idle_open = SubResource( 3 )
 anims/open = SubResource( 4 )
 
 [node name="Light2D" type="Light2D" parent="."]
+light_mask = 1024
 position = Vector2( 0.201439, -14.2379 )
 texture = ExtResource( 1 )
 offset = Vector2( 0, 18 )
 texture_scale = 0.8
-range_height = 2048.0
+range_height = 100.0
 shadow_enabled = true
 shadow_buffer_size = 512
+shadow_item_cull_mask = 1025
 
 [node name="LO_Right" type="LightOccluder2D" parent="."]
-light_mask = 3
-position = Vector2( 11.05, 0 )
+light_mask = 1024
+position = Vector2( 3.83941, 0 )
 occluder = SubResource( 5 )
-light_mask = 3
+light_mask = 1024
 
 [node name="LO_Left" type="LightOccluder2D" parent="."]
-light_mask = 3
-position = Vector2( -11.1437, 0 )
+light_mask = 1024
+position = Vector2( -3.93306, 0 )
 occluder = SubResource( 6 )
-light_mask = 3
+light_mask = 1024
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0

@@ -9,6 +9,7 @@ Releases/*
 
 # Raw work folder and misc
 Work/*
+Assets/Audio/SFX/Voice/*.wav
 
 # Imported translations (automatically generated from CSV files)
 *.translation

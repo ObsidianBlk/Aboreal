@@ -1,9 +1,10 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Assets/Graphics/Player/Player.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Objects/Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Graphics/Light/Light_8x8.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Scripts/Flicker_Light.gd" type="Script" id=4]
+[ext_resource path="res://Assets/Graphics/Light/Flashlight.png" type="Texture" id=5]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.0
@@ -73,6 +74,30 @@ tracks/4/keys = {
 "update": 0,
 "values": [ Vector2( -1.83703, -6.95367 ), Vector2( -1.2758, -6.25213 ), Vector2( -1.51815, -6.09907 ), Vector2( -1.86963, -7.13083 ), Vector2( -2.00062, -7.50114 ), Vector2( -1.51426, -7.42246 ), Vector2( -1.44882, -7.53086 ) ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Viz/Flashlight:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -0.982162, -6.87508 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Viz/Flashlight:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 41.9435 ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "crouch"
@@ -137,6 +162,30 @@ tracks/4/keys = {
 "update": 0,
 "values": [ Vector2( -1.83703, -6.95367 ) ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Viz/Flashlight:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -0.982162, -6.87508 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Viz/Flashlight:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 41.9435 ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "die"
@@ -196,9 +245,12 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0.8 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
+"args": [  ],
+"method": "_HideFlashlight"
+}, {
 "args": [  ],
 "method": "_Die"
 } ]
@@ -214,6 +266,30 @@ tracks/5/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( -0.854882, -11.1629 ), Vector2( -0.714577, -9.3389 ), Vector2( 0.407882, -8.63737 ), Vector2( 4.61712, -7.65521 ), Vector2( 5.17835, -5.41029 ), Vector2( 5.45897, -2.74444 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Viz/Flashlight:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -1.12247, -10.6634 ), Vector2( -1.12247, -10.6634 ), Vector2( -7.62939e-06, -9.68124 ), Vector2( 6.03323, -7.71693 ), Vector2( 7.01538, -6.03324 ), Vector2( 6.87507, -2.24493 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Viz/Flashlight:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 5.56643, 15.3806, 24.9876, 42.6361 ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -303,6 +379,20 @@ tracks/6/keys = {
 "update": 0,
 "values": [ Vector2( 0.267585, -9.75982 ), Vector2( 0.127273, -13.8287 ) ]
 }
+tracks/7/type = "method"
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_HideFlashlight"
+} ]
+}
 
 [sub_resource type="Animation" id=6]
 resource_name = "exit_doorway"
@@ -391,6 +481,23 @@ tracks/6/keys = {
 "update": 0,
 "values": [ Vector2( 0.127273, -12.9869 ), Vector2( 0.267585, -9.75982 ) ]
 }
+tracks/7/type = "method"
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "_HideFlashlight"
+}, {
+"args": [  ],
+"method": "_ShowFlashlight"
+} ]
+}
 
 [sub_resource type="Animation" id=7]
 length = 0.2
@@ -455,6 +562,30 @@ tracks/4/keys = {
 "update": 0,
 "values": [ Vector2( -2.01377, -11.0299 ), Vector2( -1.31223, -10.8896 ) ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Viz/Flashlight:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -2.38524, -10.8037 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Viz/Flashlight:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 10.8589 ]
+}
 
 [sub_resource type="Animation" id=8]
 length = 0.4
@@ -513,9 +644,12 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0.4 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
+"args": [  ],
+"method": "_HideFlashlight"
+}, {
 "args": [  ],
 "method": "_Die"
 } ]
@@ -531,6 +665,30 @@ tracks/5/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( -1.59285, -9.3462 ), Vector2( -1.17193, -6.82066 ), Vector2( 0.231148, -5.41758 ), Vector2( 1.91484, -4.29512 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Viz/Flashlight:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -1.6837, -9.96186 ), Vector2( -1.12247, -7.43631 ), Vector2( 0.701523, -4.48986 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Viz/Flashlight:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ -5.90195, 2.78706, 26.8771 ]
 }
 
 [sub_resource type="Animation" id=9]
@@ -596,6 +754,30 @@ tracks/4/keys = {
 "update": 0,
 "values": [ Vector2( -1.59285, -10.4687 ) ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Viz/Flashlight:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -5.03667 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Viz/Flashlight:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -2.66586, -10.5231 ) ]
+}
 
 [sub_resource type="Animation" id=10]
 length = 0.1
@@ -659,6 +841,30 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector2( -2.15408, -10.8896 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Viz/Flashlight:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -2.10462, -10.5231 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Viz/Flashlight:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 7.81226 ]
 }
 
 [sub_resource type="Animation" id=11]
@@ -747,6 +953,30 @@ tracks/6/keys = {
 "update": 0,
 "values": [ Vector2( -2.575, -10.609 ) ]
 }
+tracks/7/type = "value"
+tracks/7/path = NodePath("Viz/Flashlight:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -2.80616, -10.5231 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Viz/Flashlight:rotation_degrees")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [sub_resource type="Animation" id=12]
 length = 0.5
@@ -809,6 +1039,18 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( -2.575, -10.609 ), Vector2( -2.575, -12.433 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Viz/Flashlight:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -2.80616, -10.5231 ), Vector2( -2.80616, -12.2068 ) ]
 }
 
 [sub_resource type="Animation" id=13]
@@ -935,6 +1177,30 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector2( -0.330078, -8.92527 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Viz/Flashlight:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -0.84185, -9.12001 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Viz/Flashlight:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 4.13235 ]
 }
 
 [sub_resource type="Animation" id=15]
@@ -1063,6 +1329,30 @@ tracks/4/keys = {
 "update": 0,
 "values": [ Vector2( -1.77259, -12.0515 ), Vector2( -2.0532, -12.3321 ) ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Viz/Flashlight:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -2.24493, -10.6634 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Viz/Flashlight:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 11.8106 ]
+}
 
 [sub_resource type="Animation" id=17]
 length = 0.1
@@ -1127,6 +1417,18 @@ tracks/4/keys = {
 "update": 0,
 "values": [ Vector2( -1.77259, -12.0515 ) ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Viz/Flashlight:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 10.4654 ]
+}
 
 [sub_resource type="Animation" id=18]
 length = 0.9
@@ -1185,11 +1487,17 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0.4 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.4, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
 "args": [  ],
+"method": "_HideFlashlight"
+}, {
+"args": [  ],
 "method": "_PickedUp"
+}, {
+"args": [  ],
+"method": "_ShowFlashlight"
 } ]
 }
 tracks/5/type = "value"
@@ -1268,6 +1576,30 @@ tracks/4/keys = {
 "update": 0,
 "values": [ Vector2( -2.44127, -11.7858 ), Vector2( -2.44127, -13.0486 ), Vector2( -2.44127, -11.7458 ), Vector2( -2.44127, -10.63 ), Vector2( -2.44127, -11.8433 ), Vector2( -2.44127, -13.0917 ), Vector2( -2.16066, -12.2355 ), Vector2( -2.30097, -11.4494 ) ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Viz/Flashlight:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -2.24493, -10.5231 ), Vector2( -2.24493, -12.9083 ), Vector2( -2.245, -10.523 ), Vector2( -2.245, -12.908 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Viz/Flashlight:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 5.63601 ]
+}
 
 [sub_resource type="Animation" id=20]
 length = 0.4
@@ -1331,6 +1663,20 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( -0.420921, -10.1021 ), Vector2( 0.420921, -10.1021 ), Vector2( 0.561228, -10.1021 ), Vector2( 1.47323, -10.1021 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_HideFlashlight"
+} ]
 }
 
 [sub_resource type="Animation" id=21]
@@ -1396,6 +1742,30 @@ tracks/4/keys = {
 "update": 0,
 "values": [ Vector2( -1.68369, -10.944 ), Vector2( -1.96431, -12.2068 ), Vector2( -1.91754, -11.9963 ), Vector2( -2.01108, -10.944 ), Vector2( -1.92923, -12.4874 ), Vector2( -1.84738, -11.9729 ), Vector2( -1.90585, -12.16 ) ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Viz/Flashlight:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -2.94646, -9.26031 ), Vector2( -2.94646, -10.5231 ), Vector2( -2.946, -10.523 ), Vector2( -2.946, -9.6 ), Vector2( -2.946, -10.523 ), Vector2( -2.946, -10.523 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Viz/Flashlight:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 1024
@@ -1410,10 +1780,11 @@ shape = SubResource( 1 )
 
 [node name="Battery_Light" type="Light2D" parent="Viz"]
 visible = false
-position = Vector2( -1.68369, -10.944 )
+position = Vector2( -0.854882, -11.1629 )
 texture = ExtResource( 3 )
 color = Color( 0.627451, 1, 0.462745, 1 )
-energy = 0.5
+energy = 0.524066
+range_height = 20.0
 shadow_enabled = true
 shadow_buffer_size = 256
 shadow_gradient_length = 10.0
@@ -1421,13 +1792,25 @@ script = ExtResource( 4 )
 min_energy = 0.4
 max_energy = 0.7
 
+[node name="Flashlight" type="Light2D" parent="Viz"]
+visible = false
+position = Vector2( -1.12247, -10.6634 )
+rotation = 0.0971526
+texture = ExtResource( 5 )
+offset = Vector2( 16, 0 )
+color = Color( 0.807843, 0.941176, 0.960784, 1 )
+energy = 0.75
+range_height = 20.0
+shadow_enabled = true
+shadow_buffer_size = 256
+
 [node name="Sprite" type="Sprite" parent="Viz"]
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( -8, -20 )
 hframes = 12
 vframes = 6
-frame = 9
+frame = 58
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 anims/crawl = SubResource( 2 )
