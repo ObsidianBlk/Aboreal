@@ -83,5 +83,10 @@ light_mask = 1024
 occluder = SubResource( 4 )
 light_mask = 1024
 
+[node name="UseTimer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_body_exited"]
+[connection signal="timeout" from="UseTimer" to="." method="_on_UseTimer_timeout"]

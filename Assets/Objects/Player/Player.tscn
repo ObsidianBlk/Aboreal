@@ -1600,6 +1600,23 @@ tracks/6/keys = {
 "update": 0,
 "values": [ 5.63601 ]
 }
+tracks/7/type = "method"
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0.1, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "_Step"
+}, {
+"args": [  ],
+"method": "_Step"
+} ]
+}
 
 [sub_resource type="Animation" id=20]
 length = 0.4
@@ -1766,6 +1783,23 @@ tracks/6/keys = {
 "update": 0,
 "values": [ 0.0 ]
 }
+tracks/7/type = "method"
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0.6, 1.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "_Step"
+}, {
+"args": [  ],
+"method": "_Step"
+} ]
+}
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 1024
@@ -1780,7 +1814,7 @@ shape = SubResource( 1 )
 
 [node name="Battery_Light" type="Light2D" parent="Viz"]
 visible = false
-position = Vector2( -0.854882, -11.1629 )
+position = Vector2( -2.44127, -13.0917 )
 texture = ExtResource( 3 )
 color = Color( 0.627451, 1, 0.462745, 1 )
 energy = 0.524066
@@ -1794,8 +1828,8 @@ max_energy = 0.7
 
 [node name="Flashlight" type="Light2D" parent="Viz"]
 visible = false
-position = Vector2( -1.12247, -10.6634 )
-rotation = 0.0971526
+position = Vector2( -2.245, -12.908 )
+rotation = 0.0983669
 texture = ExtResource( 5 )
 offset = Vector2( 16, 0 )
 color = Color( 0.807843, 0.941176, 0.960784, 1 )
@@ -1810,7 +1844,7 @@ centered = false
 offset = Vector2( -8, -20 )
 hframes = 12
 vframes = 6
-frame = 58
+frame = 21
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 anims/crawl = SubResource( 2 )

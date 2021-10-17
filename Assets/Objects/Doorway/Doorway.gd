@@ -5,6 +5,9 @@ class_name Doorway
 # Export Variables
 # ---------------------------------------------------------------------------
 export var target_door_path : NodePath = ""
+export var target_zone_path : String = ""
+export var target_zone_door : String = ""
+export var take_battery : bool = false
 
 # ---------------------------------------------------------------------------
 # Variables
@@ -100,12 +103,14 @@ func _on_player_activate() -> void:
 func _on_player_enter() -> void:
 	if _player == null or _state != 1:
 		return
-	var target_door = get_node_or_null(target_door_path)
-	if target_door != null:
-		if target_door.is_closed():
-			print("Target door is closed... opening")
-			target_door.open()
-		else:
-			print("Target door is open already")
-		_player.transition(target_door.global_position + Vector2(0.0, 4.0), true)
+	if target_zone_path != "" and target_zone_door != "":
+		if take_battery:
+			_player.take_battery(false)
+		_player.transition_zone(target_zone_path, target_zone_door)
+	else:
+		var target_door = get_node_or_null(target_door_path)
+		if target_door != null:
+			if target_door.is_closed():
+				target_door.open()
+			_player.transition(target_door.global_position + Vector2(0.0, 4.0), true)
 

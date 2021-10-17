@@ -3,7 +3,7 @@ class_name Player
 
 signal activate
 signal enter
-signal zone(src)
+signal zone(src, doorway)
 signal dead
 
 # ----------------------------------------------------------------
@@ -48,6 +48,12 @@ var VOICE_LAND = [
 	preload("res://Assets/Audio/SFX/Voice/landing4.wav")
 ]
 
+var STEPS = [
+	preload("res://Assets/Audio/SFX/Char/foot_step_001.wav"),
+	preload("res://Assets/Audio/SFX/Char/foot_step_002.wav"),
+	preload("res://Assets/Audio/SFX/Char/foot_step_003.wav")
+]
+
 # ----------------------------------------------------------------
 # Export Variables
 # ----------------------------------------------------------------
@@ -67,6 +73,7 @@ var _rng : RandomNumberGenerator = null
 var _velocity = Vector2.ZERO
 var _state = STATE.IDLE
 var _move_state = MOVEMENT.WALKING
+var _jumping : bool = false
 
 var _battery_charge = -1.0
 var _always_run = false
@@ -74,6 +81,7 @@ var _flashlight_enabled = false
 
 var _transition_target : Vector2 = Vector2.ZERO
 var _transition_zone : String = ""
+var _transition_doorway : = ""
 
 
 # ----------------------------------------------------------------
@@ -114,8 +122,6 @@ func _physics_process(delta : float) -> void:
 # ----------------------------------------------------------------
 func _ProcessIdleState(delta : float) -> void:
 	if not is_on_floor():
-		if _velocity.y < 0.0:
-			_PlayAudio(voice_node, VOICE_JUMP)
 		_state = STATE.AIR
 		return
 		
@@ -136,8 +142,6 @@ func _ProcessIdleState(delta : float) -> void:
 
 func _ProcessMoveState(delta : float) -> void:
 	if not is_on_floor():
-		if _velocity.y < 0.0:
-			_PlayAudio(voice_node, VOICE_JUMP)
 		_state = STATE.AIR
 		return
 	
@@ -177,6 +181,7 @@ func _ProcessAirState(delta : float) -> void:
 			_PlayIfNotCurrent("lifting")
 		else:
 			_PlayIfNotCurrent("falling")
+			_jumping = false
 	
 	_velocity.y += gravity * delta
 	_ProcessMiscInput()
@@ -199,14 +204,14 @@ func _ProcessUserInteractions() -> void:
 func _ProcessUserJump(delta : float) -> void:
 	if Input.is_action_just_pressed("jump"):
 		if _move_state == MOVEMENT.CRAWLING:
-			print("Crawling")
 			position.y += 2
 		else:
-			print("Not Crawling")
 			if abs(_velocity.x) > max_walk_speed:
 				_velocity.y -= jump_force * 1.5
 			else:
 				_velocity.y -= jump_force
+			_jumping = true
+			_PlayAudio(voice_node, VOICE_JUMP)
 
 func _ProcessMiscInput() -> void:
 	if Input.is_action_just_pressed("flashlight"):
@@ -229,16 +234,14 @@ func _ProcessUserMovement(delta : float) -> void:
 			-speed, speed
 		)
 		if _velocity.x > 0.0 and viz_node.scale.x < 0.0:
-			#print("Changing Scale - RIGHT")
 			viz_node.scale.x = 1.0
 		elif _velocity.x < 0.0 and viz_node.scale.x > 0.0:
-			#print("Changing Scale - LEFT - ", scale)
 			viz_node.scale.x = -1.0
-			#print(self.scale)
 	else:
 		var friction = run_friction if running else walk_friction
 		_velocity.x = lerp(_velocity.x, 0.0, friction)
-	_velocity = move_and_slide_with_snap(_velocity, Vector2.DOWN, Vector2.UP)
+	var snap = (Vector2.DOWN if not _jumping else Vector2.ZERO) * 3
+	_velocity = move_and_slide_with_snap(_velocity, snap, Vector2.UP)
 
 
 func _UpdateMovementState() -> void:
@@ -279,6 +282,9 @@ func _ShowFlashlight() -> void:
 	if _flashlight_enabled:
 		flashlight_node.visible = true
 
+func _Step() -> void:
+	_PlayAudio(sfx_node, STEPS)
+
 func _PlayIfNotCurrent(anim_name : String) -> void:
 	if anim_node.current_animation != anim_name:
 		#print("Playing Current: ", anim_node.current_animation, " | Playing Now: ", anim_name)
@@ -287,12 +293,15 @@ func _PlayIfNotCurrent(anim_name : String) -> void:
 
 func _PickedUp() -> void:
 	if _state == STATE.PICKUP:
-		if _battery_charge >= 0.0:
-			sprite_node.texture = SPRITE_EQUIPPED
-			bat_light_node.visible = true
-		else:
-			sprite_node.texture = SPRITE_UNEQUIPPED
-			bat_light_node.visible = false
+		_UpdateBatteryViz()
+
+func _UpdateBatteryViz() -> void:
+	if _battery_charge >= 0.0:
+		sprite_node.texture = SPRITE_EQUIPPED
+		bat_light_node.visible = true
+	else:
+		sprite_node.texture = SPRITE_UNEQUIPPED
+		bat_light_node.visible = false
 
 
 func _Die() -> void:
@@ -335,10 +344,11 @@ func transition(target_position : Vector2, doorway_anim : bool = false) -> void:
 		tween_node.interpolate_property(sprite_node, "self_modulate", sprite_node.self_modulate, Color(1,1,1,0), 0.4, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		tween_node.start()
 
-func transition_zone(target_zone : String) -> void:
+func transition_zone(target_zone : String, doorway : String) -> void:
 	if _state == STATE.TRANSITION:
 		return
 	_transition_zone = target_zone
+	_transition_doorway = doorway
 	_state = STATE.TRANSITION
 	anim_node.play("enter_doorway")
 
@@ -346,6 +356,7 @@ func transition_end(no_doorway : bool = false) -> void:
 	if _state != STATE.TRANSITION or _transition_zone == "":
 		return
 	_transition_zone = ""
+	_transition_doorway = ""
 	if no_doorway:
 		reset()
 	else:
@@ -359,20 +370,26 @@ func using(u : bool = true) -> void:
 func is_using() -> bool:
 	return _state == STATE.USE
 
-func give_battery(amount : float) -> bool:
+func give_battery(amount : float, pickup : bool = true) -> bool:
 	if _battery_charge < 0.0 and amount >= 0.0:
 		_battery_charge = amount
-		_state = STATE.PICKUP
-		anim_node.play("pickup")
+		if pickup:
+			_state = STATE.PICKUP
+			anim_node.play("pickup")
+		else:
+			_UpdateBatteryViz()
 		return true
 	return false
 
-func take_battery() -> float:
+func take_battery(pickup : bool = true) -> float:
 	var v = _battery_charge
 	if _battery_charge >= 0.0:
 		_battery_charge = -1.0
-		_state = STATE.PICKUP
-		anim_node.play("pickup")
+		if pickup:
+			_state = STATE.PICKUP
+			anim_node.play("pickup")
+		else:
+			_UpdateBatteryViz()
 	return v
 
 func hurt(amount : float) -> void:
@@ -387,7 +404,7 @@ func _on_animation_finished(anim_name):
 	if _state == STATE.TRANSITION:
 		if anim_name == "enter_doorway":
 			if _transition_zone != "":
-				emit_signal("zone", _transition_zone)
+				emit_signal("zone", _transition_zone, _transition_doorway)
 			else:
 				self.global_position = _transition_target
 				anim_node.play("exit_doorway")

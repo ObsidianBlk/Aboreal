@@ -13,6 +13,8 @@ export (Array, NodePath) var small_spawn_destinations = []
 # ---------------------------------------------------------------------------
 # Variables
 # ---------------------------------------------------------------------------
+var _rng : RandomNumberGenerator = null
+
 var _smalls_spawn_enabled = true
 var _smalls_group = null
 var _smalls_spawned = 0
@@ -42,6 +44,8 @@ func set_small_spawn_container_path(cp : NodePath) -> void:
 # Override Methods
 # ---------------------------------------------------------------------------
 func _ready() -> void:
+	_rng = RandomNumberGenerator.new()
+	_rng.randomize()
 	set_small_spawn_container_path(small_spawn_container_path)
 	if small_spawner_node != null:
 		_smalls_timer = Timer.new()
@@ -74,7 +78,8 @@ func _GetRandSmallSpawnDestination() -> Vector2:
 
 func _GetRandSmallSpawnPosition() -> Node2D:
 	if small_spawner_node != null:
-		var idx = floor(rand_range(0.0, small_spawner_node.get_child_count()))
+		var idx = _rng.randi_range(0, small_spawner_node.get_child_count())
+		#var idx = floor(rand_range(0.0, small_spawner_node.get_child_count()))
 		var node = small_spawner_node.get_child(idx)
 		if node is Node2D and node.visible:
 			return node
@@ -95,7 +100,7 @@ func _SpawnSmalls() -> void:
 				var boid = BOID_INST.instance()
 				boid.position = pos_node.global_position
 				boid.home_position = pos_node.global_position
-				boid.despawn_delay = rand_range(1.0, 3.0)
+				boid.despawn_delay = _rng.randf_range(1.0, 3.0)
 				boid.connect("release", self, "_on_release_small_spawn", [boid])
 				_small_spawn_container_node.add_child(boid)
 				_smalls_group.add_boid(boid)
@@ -108,7 +113,7 @@ func _SpawnSmalls() -> void:
 		_smalls_group = BOIDGROUP_INST.instance()
 		_smalls_group.position = self.global_position
 		_smalls_group.target_position = dest
-		_smalls_group.time_to_target = rand_range(20.0, 50.0)
+		_smalls_group.time_to_target = _rng.randf_range(20.0, 50.0)
 		_small_spawn_container_node.add_child(_smalls_group)
 		_SpawnSmalls()
 
@@ -126,7 +131,7 @@ func _on_release_small_spawn(boid : Boid) -> void:
 		_smalls_group.get_parent().remove_child(_smalls_group)
 		_smalls_group.queue_free()
 		_smalls_group = null
-		_smalls_timer.start(rand_range(20.0, 50.0))
+		_smalls_timer.start(_rng.randf_range(20.0, 50.0))
 
 func _on_smalls_enable() -> void:
 	_smalls_spawn_enabled = true

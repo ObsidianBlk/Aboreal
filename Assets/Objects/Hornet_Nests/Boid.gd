@@ -16,9 +16,9 @@ export var verbose : bool = false
 # Variables
 # ----------------------------------------------------------------------------
 var _speed = 40
-var _chase_speed = 160
+var _chase_speed = 100
 var _acceleration = 50
-var _chase_accel = 80
+var _chase_accel = 70
 var _velocity : Vector2 = Vector2.ZERO
 var _direction : Vector2 = Vector2.ZERO
 
@@ -155,6 +155,7 @@ func knows_of_enemy() -> bool:
 
 func return_home() -> void:
 	_return_home = true
+	_velocity *= 0.25
 
 
 

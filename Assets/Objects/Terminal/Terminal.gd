@@ -3,12 +3,15 @@ extends Node2D
 
 signal shift_up(amount)
 signal shift_down(amount)
+signal switch(on)
 
 
 # ---------------------------------------------------------------------------
 # Export Variables
 # ---------------------------------------------------------------------------
 export var powered : bool = false
+export var switch : bool = true
+export var switch_state : bool = false
 export (float, 0.01, 1.0, 0.001) var amount_per_second = 1.0
 
 # ---------------------------------------------------------------------------
@@ -16,12 +19,12 @@ export (float, 0.01, 1.0, 0.001) var amount_per_second = 1.0
 # ---------------------------------------------------------------------------
 var _player : Player = null
 
-
 # ---------------------------------------------------------------------------
 # Onready Variables
 # ---------------------------------------------------------------------------
 onready var anim_node = get_node("Anim")
 onready var light_node = get_node("Light2D")
+onready var usetimer_node = get_node("UseTimer")
 
 # ---------------------------------------------------------------------------
 # Setters / Getters
@@ -87,6 +90,15 @@ func _on_body_exited(body):
 
 func _on_player_activate() -> void:
 	if _player != null and powered:
-		_player.using()
-		set_process(true)
+		if switch:
+			_player.using()
+			usetimer_node.start()
+		else:
+			_player.using()
+			set_process(true)
 
+func _on_UseTimer_timeout():
+	if _player != null and switch:
+		_player.using(false)
+		switch_state = not switch_state
+		emit_signal("switch", switch_state)

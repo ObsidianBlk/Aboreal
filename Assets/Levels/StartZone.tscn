@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Assets/Graphics/Tilesets/TilesetB_Floors.tres" type="TileSet" id=1]
 [ext_resource path="res://Assets/Graphics/Tilesets/TilesetB_Walls.tres" type="TileSet" id=2]
@@ -6,6 +6,12 @@
 [ext_resource path="res://Assets/Scripts/AudioMon.gd" type="Script" id=4]
 [ext_resource path="res://Assets/Objects/ProgressBar/ProgressBar.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Levels/Zone.gd" type="Script" id=6]
+[ext_resource path="res://Assets/Graphics/Background/Background_01.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Graphics/Light/GodRay_24x48.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Objects/BatteryPort/BatteryPort.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Assets/Objects/Charger/Charger.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Assets/Objects/Doorway/Doorway.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Assets/Graphics/Light/GodRay_24x96.png" type="Texture" id=12]
 
 [node name="StartZone" type="Node2D"]
 script = ExtResource( 6 )
@@ -14,24 +20,96 @@ script = ExtResource( 6 )
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 12, 12 )
 format = 1
-tile_data = PoolIntArray( -327680, 4, 0, -327679, 2, 0, -327678, 2, 0, -327677, 2, 0, -327676, 2, 0, -327675, 2, 0, -327674, 26, 0, -327673, 27, 0, -327672, 27, 0, -327671, 27, 0, -327670, 28, 0, -327669, 2, 0, -327668, 2, 0, -327667, 2, 0, -327666, 2, 0, -327665, 2, 0, -327664, 2, 0, -327663, 2, 0, -327662, 3, 0, -262144, 4, 0, -262143, 2, 0, -262142, 2, 0, -262141, 2, 0, -262140, 2, 0, -262139, 2, 0, -262138, 7, 0, -262137, 8, 0, -262136, 8, 0, -262135, 8, 0, -262134, 9, 0, -262133, 2, 0, -262132, 2, 0, -262131, 2, 0, -262130, 2, 0, -262129, 2, 0, -262128, 2, 0, -262127, 2, 0, -262126, 3, 0, -196608, 4, 0, -196607, 2, 0, -196606, 2, 0, -196605, 2, 0, -196604, 2, 0, -196603, 2, 0, -196602, 7, 0, -196601, 8, 0, -196600, 8, 0, -196599, 8, 0, -196598, 9, 0, -196597, 2, 0, -196596, 2, 0, -196595, 2, 0, -196594, 2, 0, -196593, 2, 0, -196592, 2, 0, -196591, 2, 0, -196590, 3, 0, -131072, 4, 0, -131071, 32, 0, -131070, 2, 0, -131069, 2, 0, -131068, 2, 0, -131067, 2, 0, -131066, 29, 0, -131065, 30, 0, -131064, 30, 0, -131063, 30, 0, -131062, 31, 0, -131061, 2, 0, -131060, 2, 0, -131059, 2, 0, -131058, 2, 0, -131057, 2, 0, -131056, 2, 0, -131055, 2, 0, -131054, 3, 0, -65536, 4, 0, -65518, 3, 0 )
+tile_data = PoolIntArray( -720871, 3, 0, -655346, 2, 0, -655345, 2, 0, -655344, 2, 0, -655343, 2, 0, -655342, 2, 0, -655341, 2, 0, -655340, 2, 0, -655339, 2, 0, -655338, 2, 0, -655337, 2, 0, -655336, 2, 0, -655335, 3, 0, -589812, 2, 0, -589811, 2, 0, -589810, 2, 0, -589809, 2, 0, -589808, 2, 0, -589807, 2, 0, -589806, 2, 0, -589805, 2, 0, -589804, 2, 0, -589803, 2, 0, -589802, 2, 0, -589801, 2, 0, -589800, 2, 0, -589799, 3, 0, -524278, 9, 0, -524277, 2, 0, -524276, 2, 0, -524275, 2, 0, -524274, 2, 0, -524273, 2, 0, -524272, 2, 0, -524271, 2, 0, -524270, 2, 0, -524269, 2, 0, -524268, 2, 0, -524267, 2, 0, -524266, 2, 0, -524265, 2, 0, -524264, 2, 0, -524263, 3, 0, -393217, 4, 0, -458746, 2, 0, -458745, 2, 0, -458744, 8, 0, -458743, 8, 0, -458742, 9, 0, -458741, 2, 0, -458740, 2, 0, -458739, 2, 0, -458738, 2, 0, -458737, 2, 0, -458736, 2, 0, -458735, 2, 0, -458734, 2, 0, -458733, 2, 0, -458732, 2, 0, -458731, 2, 0, -458730, 2, 0, -458729, 2, 0, -458728, 2, 0, -458727, 3, 0, -327681, 4, 0, -393216, 2, 0, -393215, 2, 0, -393214, 2, 0, -393213, 2, 0, -393212, 2, 0, -393211, 2, 0, -393210, 26, 0, -393209, 27, 0, -393208, 27, 0, -393207, 27, 0, -393206, 28, 0, -393205, 2, 0, -393204, 2, 0, -393203, 2, 0, -393202, 2, 0, -393201, 2, 0, -393200, 2, 0, -393199, 2, 0, -393198, 2, 0, -393197, 2, 0, -393196, 2, 0, -393195, 2, 0, -393194, 2, 0, -393193, 2, 0, -393192, 2, 0, -393191, 3, 0, -262145, 4, 0, -327680, 2, 0, -327679, 2, 0, -327678, 2, 0, -327677, 2, 0, -327676, 2, 0, -327675, 2, 0, -327674, 7, 0, -327673, 8, 0, -327672, 8, 0, -327671, 8, 0, -327670, 9, 0, -327669, 2, 0, -327668, 2, 0, -327667, 2, 0, -327666, 2, 0, -327665, 2, 0, -327664, 2, 0, -327663, 2, 0, -327662, 2, 0, -327661, 2, 0, -327660, 2, 0, -327659, 2, 0, -327658, 2, 0, -327657, 2, 0, -327656, 2, 0, -327655, 3, 0, -196609, 4, 0, -262144, 2, 0, -262143, 2, 0, -262142, 2, 0, -262141, 2, 0, -262140, 2, 0, -262139, 2, 0, -262138, 7, 0, -262137, 8, 0, -262136, 8, 0, -262135, 8, 0, -262134, 9, 0, -262133, 2, 0, -262132, 2, 0, -262131, 2, 0, -262130, 2, 0, -262129, 2, 0, -262128, 2, 0, -262127, 2, 0, -262126, 2, 0, -262125, 2, 0, -262124, 2, 0, -262123, 2, 0, -262122, 2, 0, -262121, 2, 0, -262120, 2, 0, -262119, 3, 0, -131073, 4, 0, -196608, 2, 0, -196607, 2, 0, -196606, 2, 0, -196605, 2, 0, -196604, 2, 0, -196603, 2, 0, -196602, 7, 0, -196601, 8, 0, -196600, 8, 0, -196599, 8, 0, -196598, 9, 0, -196597, 2, 0, -196596, 2, 0, -196595, 2, 0, -196594, 2, 0, -196593, 2, 0, -196583, 3, 0, -65537, 4, 0, -131072, 2, 0, -131071, 32, 0, -131070, 2, 0, -131069, 2, 0, -131068, 2, 0, -131067, 2, 0, -131066, 29, 0, -131065, 30, 0, -131064, 30, 0, -131063, 30, 0, -131062, 31, 0, -131061, 2, 0, -131060, 2, 0, -131059, 2, 0, -1, 4, 0 )
 
 [node name="Details" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 12, 12 )
 format = 1
-tile_data = PoolIntArray( -327679, 0, 0, -327678, 0, 0, -327677, 0, 0, -327676, 0, 0, -327675, 0, 0, -327669, 0, 0, -327668, 0, 0, -327667, 0, 0, -327666, 0, 0, -327665, 0, 0, -327664, 0, 0, -327663, 0, 0, -131071, 1, 0, -131070, 1, 0, -131069, 1, 0, -131068, 1, 0, -131067, 1, 0, -131061, 1, 0, -131060, 1, 0, -131059, 1, 0, -131058, 1, 0, -131057, 1, 0, -131056, 1, 0, -131055, 1, 0 )
+tile_data = PoolIntArray( -655344, 0, 0, -655343, 0, 0, -655342, 0, 0, -655341, 0, 0, -655340, 0, 0, -655339, 0, 0, -655338, 0, 0, -655337, 0, 0, -655336, 0, 0, -393216, 0, 0, -393215, 0, 0, -393214, 0, 0, -393213, 0, 0, -393212, 0, 0, -393211, 0, 0, -262128, 1, 0, -262127, 1, 0, -262126, 1, 0, -262125, 1, 0, -262124, 1, 0, -262123, 1, 0, -262122, 1, 0, -262121, 1, 0, -262120, 1, 0, -131072, 1, 0, -131071, 1, 0, -131070, 1, 0, -131069, 1, 0, -131068, 1, 0, -131067, 1, 0, -131061, 1, 0 )
 
 [node name="Floors" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 12, 12 )
 format = 1
-tile_data = PoolIntArray( -65536, 2, 0, -65535, 0, 0, -65534, 0, 0, -65533, 0, 0, -65532, 0, 0, -65531, 0, 0, -65530, 0, 0, -65529, 0, 0, -65528, 0, 0, -65527, 0, 0, -65526, 0, 0, -65525, 0, 0, -65524, 0, 0, -65523, 0, 0, -65522, 0, 0, -65521, 0, 0, -65520, 0, 0, -65519, 0, 0, -65518, 1, 0 )
+tile_data = PoolIntArray( -720882, 18, 0, -720880, 12, 0, -720879, 12, 0, -720878, 13, 0, -720877, 14, 0, -720876, 14, 0, -720875, 14, 0, -720874, 15, 0, -720873, 12, 0, -720872, 12, 0, -720871, 11, 0, -655348, 16, 0, -589814, 18, 0, -524280, 16, 0, -393217, 10, 0, -458752, 12, 0, -458751, 13, 0, -458750, 14, 0, -458749, 14, 0, -458748, 14, 0, -458747, 14, 0, -458746, 15, 0, -458745, 12, 0, -196594, 6, 0, -196592, 0, 0, -196591, 0, 0, -196590, 0, 0, -196589, 0, 0, -196588, 0, 0, -196587, 0, 0, -196586, 0, 0, -196585, 0, 0, -196584, 0, 0, -196583, 1, 0, -131060, 6, 0, -1, 2, 0, -65536, 0, 0, -65535, 0, 0, -65534, 0, 0, -65533, 0, 0, -65532, 0, 0, -65531, 0, 0, -65530, 0, 0, -65529, 0, 0, -65528, 0, 0, -65527, 0, 0, -65526, 0, 0, -65525, 0, 0 )
+
+[node name="Light" type="Node2D" parent="."]
+
+[node name="Light2D" type="Light2D" parent="Light"]
+position = Vector2( 24, -54 )
+texture = ExtResource( 8 )
+range_height = 20.0
+shadow_enabled = true
+shadow_buffer_size = 256
+
+[node name="Light2D2" type="Light2D" parent="Light"]
+position = Vector2( 48, -54 )
+texture = ExtResource( 8 )
+range_height = 20.0
+shadow_enabled = true
+shadow_buffer_size = 256
+
+[node name="Light2D3" type="Light2D" parent="Light"]
+position = Vector2( 72, -54 )
+texture = ExtResource( 8 )
+range_height = 20.0
+shadow_enabled = true
+shadow_buffer_size = 256
+
+[node name="Light2D4" type="Light2D" parent="Light"]
+position = Vector2( 141.955, -74.5073 )
+rotation = -0.445148
+texture = ExtResource( 8 )
+range_height = 20.0
+shadow_enabled = true
+shadow_buffer_size = 256
+
+[node name="Light2D5" type="Light2D" parent="Light"]
+position = Vector2( 189.621, -97.8682 )
+rotation = -0.445148
+texture = ExtResource( 8 )
+range_height = 20.0
+shadow_enabled = true
+shadow_buffer_size = 256
+
+[node name="Light2D6" type="Light2D" parent="Light"]
+position = Vector2( 234, -102 )
+texture = ExtResource( 8 )
+range_height = 20.0
+shadow_enabled = true
+shadow_buffer_size = 256
+
+[node name="Light2D7" type="Light2D" parent="Light"]
+position = Vector2( 258, -102 )
+texture = ExtResource( 8 )
+range_height = 20.0
+shadow_enabled = true
+shadow_buffer_size = 256
+
+[node name="Light2D8" type="Light2D" parent="Light"]
+position = Vector2( 91.1784, -14 )
+rotation = -3.14159
+texture = ExtResource( 12 )
+offset = Vector2( 0, 48 )
+range_height = 20.0
+shadow_enabled = true
+shadow_buffer_size = 256
+
+[node name="Light2D9" type="Light2D" parent="Light"]
+position = Vector2( 115.178, -14 )
+rotation = -3.14159
+texture = ExtResource( 12 )
+offset = Vector2( 0, 48 )
+range_height = 20.0
+shadow_enabled = true
+shadow_buffer_size = 256
 
 [node name="Audio_Terminals" type="Node2D" parent="."]
 
 [node name="Terminal_Master" parent="Audio_Terminals" instance=ExtResource( 3 )]
 position = Vector2( 26, -10 )
+switch = false
 
 [node name="ProgressBar" parent="Audio_Terminals/Terminal_Master" instance=ExtResource( 5 )]
 position = Vector2( 8, -17 )
@@ -42,6 +120,7 @@ value_node_path = NodePath("../ProgressBar")
 
 [node name="Terminal_Music" parent="Audio_Terminals" instance=ExtResource( 3 )]
 position = Vector2( 45, -10 )
+switch = false
 
 [node name="ProgressBar" parent="Audio_Terminals/Terminal_Music" instance=ExtResource( 5 )]
 position = Vector2( 8, -17 )
@@ -53,6 +132,7 @@ value_node_path = NodePath("../ProgressBar")
 
 [node name="Terminal_SFX" parent="Audio_Terminals" instance=ExtResource( 3 )]
 position = Vector2( 64, -10 )
+switch = false
 
 [node name="ProgressBar" parent="Audio_Terminals/Terminal_SFX" instance=ExtResource( 5 )]
 position = Vector2( 8, -17 )
@@ -62,7 +142,24 @@ script = ExtResource( 4 )
 audio_bus = 2
 value_node_path = NodePath("../ProgressBar")
 
+[node name="BatteryPort" parent="Audio_Terminals" instance=ExtResource( 9 )]
+position = Vector2( 6, -21 )
+infinite_battery = true
+
 [node name="Zone_Doorways" type="Node2D" parent="."]
+
+[node name="StartZoneExit" parent="Zone_Doorways" instance=ExtResource( 11 )]
+position = Vector2( 280, -36 )
+target_zone_path = "res://Assets/Levels/AtriumZone.tscn"
+target_zone_door = "Atrium_Entryway"
+take_battery = true
+
+[node name="Misc" type="Node2D" parent="."]
+
+[node name="Charger" parent="Misc" instance=ExtResource( 10 )]
+position = Vector2( 133.376, -8 )
+orientation = 1
+battery_amount = 1.0
 
 [node name="Player_Container" type="Node2D" parent="."]
 
@@ -70,7 +167,18 @@ value_node_path = NodePath("../ProgressBar")
 color = Color( 0.164706, 0.156863, 0.141176, 1 )
 
 [node name="Player_Start" type="Position2D" parent="."]
-position = Vector2( 203.3, -11.5277 )
+position = Vector2( 274.715, -34.0295 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
+motion_scale = Vector2( 0.25, 0.25 )
+motion_mirroring = Vector2( 1024, 576 )
+
+[node name="Sprite" type="Sprite" parent="CanvasLayer/ParallaxBackground/ParallaxLayer"]
+texture = ExtResource( 7 )
 
 [connection signal="shift_down" from="Audio_Terminals/Terminal_Master" to="Audio_Terminals/Terminal_Master/ProgressBar" method="slide_down"]
 [connection signal="shift_up" from="Audio_Terminals/Terminal_Master" to="Audio_Terminals/Terminal_Master/ProgressBar" method="slide_up"]
@@ -78,3 +186,6 @@ position = Vector2( 203.3, -11.5277 )
 [connection signal="shift_up" from="Audio_Terminals/Terminal_Music" to="Audio_Terminals/Terminal_Music/ProgressBar" method="slide_up"]
 [connection signal="shift_down" from="Audio_Terminals/Terminal_SFX" to="Audio_Terminals/Terminal_SFX/ProgressBar" method="slide_down"]
 [connection signal="shift_up" from="Audio_Terminals/Terminal_SFX" to="Audio_Terminals/Terminal_SFX/ProgressBar" method="slide_up"]
+[connection signal="power_state" from="Audio_Terminals/BatteryPort" to="Audio_Terminals/Terminal_SFX" method="set_powered"]
+[connection signal="power_state" from="Audio_Terminals/BatteryPort" to="Audio_Terminals/Terminal_Master" method="set_powered"]
+[connection signal="power_state" from="Audio_Terminals/BatteryPort" to="Audio_Terminals/Terminal_Music" method="set_powered"]
